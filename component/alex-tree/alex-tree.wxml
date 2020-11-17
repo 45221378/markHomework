@@ -1,0 +1,158 @@
+<block wx:for="{{treeBody}}" wx:key="index">
+  <view class="content" wx:if="{{item.content}}">
+    <view class="ques-num" wx:if="{{item.name&&item.name!=''}}">{{item.name}}</view>
+    <view class="clearfix posi">
+      <alexTree tree-body="{{item.content}}" />
+    </view>
+  </view>
+  <view wx:if="{{!item.content}}" data-list="{{item.question_data}}" data-checkednum="{{item.question_data.index}}" data-checkedid="{{item.qid}}" catchtap="tapItem" class="i {{checkednum==item.question_data.index?'checked':''}} {{item.question_data.right==0?'wrong':item.question_data.right==1?'right':'double'}} ">
+    {{item.question_data.index}}
+  </view>
+</block>
+
+
+<view class="parser-content" wx:if="{{false}}" catchtap="stopcloseQues">
+  <parser-group>
+    <view>
+      <!-- 无小题的情况下 -->
+      <view wx:if="{{pageData.children.length==0}}">
+        <view style="">
+          <parser html="{{pageData.indexstem}}" />
+        </view>
+        <!-- 语文园地的第二题，解析有问题 XghWfzTd -->
+        <!-- <rich-text type = "node*" space="ensp" nodes="{{pageData.indexstem}}"></rich-text> -->
+        <view wx:for="{{pageData.options}}" wx:for-item="it" wx:key="index">
+          <parser html="{{it}}" />
+        </view>
+        <!-- 播放音频 -->
+        <view class="audio" wx:if="{{pageData.audio!=null}}">
+          <view class="audioflex">
+            <image wx:if="{{pageData.showaudioImg==3}}" class="rotate" src='../../images/icon/loading.png'></image>
+            <image wx:if="{{pageData.showaudioImg==0}}" bindtap="playbigaudio" data-id="{{pageData.id}}" data-audiosrc="{{pageData.audio}}" class="playaudioImg" src='../../images/icon/aplay.png'></image>
+            <image wx:if="{{pageData.showaudioImg==1}}" bindtap="stopbigaudio" data-id="{{pageData.id}}" data-audiosrc="{{pageData.audio}}" class="playaudioImg" src='../../images/icon/astop.png'></image>
+            <view class="timelong">{{pageData.currentTime}}/{{pageData.durationTotal}}</view>
+          </view>
+        </view>
+        <view class="clearfix">
+          <view class="myanswer">
+            我的作答：
+            <view class="error" wx:if="{{pageData.right==1?false:true&&pageData.showErrorAnswer}}">
+              {{pageData.template==6?pageData.my_answer==0?'错':'对':pageData.my_answer}}
+            </view>
+            <view class="error" wx:if="{{pageData.right==1?false:true&&!pageData.showErrorAnswer}}">
+              X
+            </view>
+            <view wx:if="{{pageData.right==1?true:false}}" class="noerror">
+              <image src="../../images/icon/gougou.png"></image>
+            </view>
+          </view>
+        </view>
+        <view class="clearfix">
+          <view class="myanswer">
+            答案解析：
+            <view class="see" bindtap="seeAnswer" data-childrenFlag="{{pageData.childrenFlag}}" data-id="{{pageData.id}}">
+              {{pageData.myanswerFlag?'收起':'查看'}}
+            </view>
+          </view>
+          <view class="myanswer-check" style="display:{{pageData.myanswerFlag?'block':'none'}}">
+            <view class="clearflex mgbt">
+              <view class="ansewrtext">答案:</view>
+              <view class="errorright">
+                <parser html="{{pageData.newAnwsers}}" />
+              </view>
+            </view>
+            <view class="clearflex" wx:if="{{pageData.analysis[0]!=''&&pageData.analysis!=null}}">
+              <text class="ansewrtext">解析:</text>
+              <view class="errorright">
+                <view wx:if="{{pageData.analysis[0]==''||pageData.analysis==null}}">
+                  <text>略</text>
+                </view>
+                <view wx:if="{{pageData.analysis[0]!=''}}">
+                  <block wx:for="{{pageData.analysis}}" wx:for-item="ana" wx:key="index">
+                    <parser html="{{ana}}" />
+                  </block>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 有小题的情况下 -->
+      <view wx:if="{{pageData.children.length>0}}">
+        <view>
+          <parser lazy-load="true" html="{{pageData.indexstem}}" />
+        </view>
+        <view wx:for="{{pageData.options}}" wx:for-item="it" wx:key="index">
+          <parser html="{{it}}" />
+        </view>
+        <!-- 播放音频 -->
+        <view class="audio" wx:if="{{pageData.audio!=null}}">
+          <view class="audioflex">
+            <image wx:if="{{pageData.showaudioImg==3}}" class="rotate" src='../../images/icon/loading.png'></image>
+            <image wx:if="{{pageData.showaudioImg==0}}" bindtap="playbigaudio" data-id="{{pageData.id}}" data-audiosrc="{{pageData.audio}}" class="playaudioImg" src='../../images/icon/aplay.png'></image>
+            <image wx:if="{{pageData.showaudioImg==1}}" bindtap="stopbigaudio" data-id="{{pageData.id}}" data-audiosrc="{{pageData.audio}}" class="playaudioImg" src='../../images/icon/astop.png'></image>
+            <view class="timelong">{{pageData.currentTime}}/{{pageData.durationTotal}}</view>
+          </view>
+        </view>
+        <block wx:for="{{pageData.children}}" wx:for-item="itch" wx:key="index">
+          <view>
+            <view class="clearfix">
+              <view class="myanswer">
+                <parser html="{{itch.indexChildstem}}" />
+                <!-- <rich-text type = "node*" space="ensp" nodes="{{itch.indexChildstem}}"></rich-text> -->
+                <block wx:for="{{itch.options}}" wx:for-item="it" wx:key="index">
+                  <view wx:if="{{pageData.template!=14 && pageData.template!=22&& pageData.template!=29}}">
+                    <parser html="{{it}}" />
+                  </view>
+                </block>
+              </view>
+            </view>
+            <view class="clearfix">
+              <view class="myanswer">
+                我的作答：
+                <view class="error" wx:if="{{itch.right==1?false:true&&itch.showErrorAnswer}}">
+                  {{itch.template==6?itch.my_answer==0?'错':'对':itch.my_answer}}
+                </view>
+                <view text class="error" wx:if="{{itch.right==1?false:true&&!itch.showErrorAnswer}}">
+                  X
+                </view>
+                <view wx:if="{{itch.right==1?true:false}}" class="noerror">
+                  <image src="../../images/icon/gougou.png"></image>
+                </view>
+              </view>
+            </view>
+            <view class="clearfix">
+              <view class="myanswer">
+                答案解析：
+                <view class="see" bindtap="seeAnswer" data-childrenflag="{{pageData.childrenFlag}}" data-id="{{pageData.id}}" data-iid="{{itch.index}}">
+                  {{itch.myanswerFlag?'收起':'查看'}}
+                </view>
+              </view>
+              <view class="myanswer-check" style="display:{{itch.myanswerFlag?'block':'none'}}">
+                <view class="myanswer clearflex">
+                  <view class="ansewrtext">答案:</view>
+                  <view class="errorright">
+                    <parser html="{{itch.newAnwsers}}" />
+                  </view>
+                </view>
+                <view class="clearflex myanswer" wx:if="{{itch.analysis[0]!=''&&itch.analysis!=null}}">
+                  <text class="ansewrtext">解析:</text>
+                  <view class="errorright">
+                    <view wx:if="{{itch.analysis[0]==''||itch.analysis[0]==null}}">
+                      <text>略</text>
+                    </view>
+                    <view wx:if="{{itch.analysis[0]!=''}}">
+                      <block wx:for="{{itch.analysis}}" wx:for-item="ana" wx:key="index">
+                        <parser html="{{ana}}" />
+                      </block>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </parser-group>
+</view>

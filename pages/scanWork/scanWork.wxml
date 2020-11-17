@@ -1,0 +1,147 @@
+<!-- pages/scanWork/scanWork.wxml -->
+<wxs src="./../../utils/check.wxs" module="tools" />
+<wxs src="./scanWork.wxs" module="scan" />
+<view class="scanWork" wx:if="{{showScan}}">
+  <image src="../../images/banner.png" lazy-load="{{true}}"></image>
+  <view class="click">点击【扫一扫】开启作业之旅~</view>
+  <view class="scan {{loginFlag?'':'blackBlue'}}" bindtap='scancode'>
+    <image src="/images/scan.png"></image>
+    <text>扫一扫</text>
+  </view>
+  <view class="gologin {{bounceInUp}}" wx:if="{{!loginFlag}}">
+    <view class="tips">请先登录再扫码交作业哦~</view>
+    <view class="gobtn" bindtap="gologin">去登录 ></view>
+  </view>
+</view>
+<view class="myWork {{showModel?'scrollFixed':showPsd?'scrollFixed':showTitle?'scrollFixed':''}}" wx:if="{{!showScan}}">
+  <view class="title">我的作业</view>
+  <!-- 旧版本 -->
+  <movable-area class="area">
+    <movable-view x="{{x}}" y="{{y}}" direction="all" class="view" bind:touchmove="{{scan.touchmove}}">
+      <view class="scan" style="background-color: rgba(126, 192, 254, 0.6)" bindtap='scancode' bind:touchend='{{scan.touchend}}'>
+        <image class="image" src="/images/scan.png"></image>
+        <text class="text">扫一扫</text>
+      </view>
+    </movable-view>
+  </movable-area>
+  <swiper class="swiper" autoplay="true" interval="3000" indicator-dots="true" duration="500" circular="true" indicator-color="#fff" indicator-active-color="#a6d2fd">
+    <block wx:for="{{bannerList}}" wx:key="*this">
+      <swiper-item>
+        <image class="explain" mode="aspectFit" src="{{item.url}}" data-index="{{item.index}}" bindtap="goExplain"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="bgdfdf">
+    <view class="scroll">
+      <view class="clearfix bgfff">
+        <pickerSecond class="pickerSconed" bind:myEvent="getData"></pickerSecond>
+      </view>
+      <view class="myWork-ul" wx:if="{{record_list.length>0}}">
+        <block wx:for="{{record_list}}" wx:for-item="item" wx:key="indexlist" wx:for-index="indexlist">
+          <view class="pdlr30">
+            <view class="myWork-li" bindtap="goList" data-imglist='{{item.image_list}}' data-subjectid='{{item.subject_id}}' data-sectionid='{{item.section_id}}' data-sectionname="{{item.section_name}}" data-sectiontime="{{item.modified}}" data-stagestatus="{{item.stage_status}}">
+              <view class="bg-img">
+                <image class="subject-img" src="{{imgList[item.subject_id]}}" lazy-load="{{true}}"></image>
+                <view class="troduces {{item.stage_id==1?'bg-green':''}}">{{item.stage_name}}</view>
+              </view>
+              <view class="center">
+                <view class="center-top">{{item.stage_name}}{{item.subject_name}}</view>
+                <view class="center-page">
+                  <view class="section_name">{{item.section_name}}</view>
+                  <view class="nomark" wx:if="{{item.stage_status==1}}">
+                    <image class="pen" src="../../images/icon/pen.png"></image>
+                    未标错
+                  </view>
+                </view>
+              </view>
+              <view class="show-canvas" wx:if="{{item.stage_status==1?false:true}}">
+                <!-- <circle wx:if="{{circleFlag}}" draw='circwewle{{indexlist}}' per='{{item.precent}}' r='54'  /> -->
+                <text class='canvas_txt1'>{{item.precent}}%</text>
+                <text class="canvas_txt2">正确率</text>
+              </view>
+              <image class="img-right" src='/images/icon/right.png'></image>
+            </view>
+            <view class="myWork-bot">
+              <view class="borderR">
+                <image class="img-time" src='/images/icon/time.png'></image>
+                <text class="book-time">{{tools.splitTime(item.modified)}}</text>
+              </view>
+              <view>
+                <image class="img-book" src='/images/icon/book.png'></image>
+                <text class="book-name">{{item.book_name}}</text>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+      <view class="myWork-ul noData" wx:if="{{record_list.length==0}}">
+        <view wx:if="{{record_list.length==0}}">
+          <image src="/images/nodata.png"></image>
+          <view class="say">
+            <text>我的作业空空如也~</text>
+            <text>将题目加入错题本可以方便复习哦</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="hint" wx:if="{{showModel}}">
+  <view class="hint-name">
+    <view class="tips">开启监管模式下，打开小程序后输入</view>
+    <view class="tips">密码才能使用小程序功能。</view>
+    <view class="bottom-btn clearfix">
+      <view class="btn-left left" bindtap="linkout">跳过</view>
+      <view class="btn-right right" bindtap="sureopen">确认开启</view>
+    </view>
+  </view>
+</view>
+<view class="hint" wx:if="{{showPsd}}">
+  <view class="hint-name padt40">
+    <view class="tips">请设置4位数监管密码</view>
+    <view class="hint-form">
+      <view class="input_row" catchtap="getFocus">
+        <view class="pwd_item" wx:for="{{4}}" wx:key="item" wx:for-index="i">
+          <text wx:if="{{pwdVal.length>i}}">{{pwdVal[i]}}</text>
+        </view>
+      </view>
+      <input class="input_control" value="{{pwdVal}}" password focus="{{psdFocus}}" bindinput="inputPwd" maxlength="4" />
+    </view>
+    <view class="bottom-btn clearfix">
+      <view class="btn-left left" bindtap="backout">返回</view>
+      <view class="btn-right right" bindtap="surepsd">确定</view>
+    </view>
+  </view>
+</view>
+<view class="hint" wx:if="{{showTitle}}">
+  <view class="hint-name">
+    <view class="tips">您可以在【我的】里设置</view>
+    <view class="tips">开启或关闭家长监管模式哦~</view>
+    <view class="bottom-btn clearfix">
+      <view class="yes" bindtap="yes">确定</view>
+    </view>
+  </view>
+</view>
+<!-- 扫描了错误的二维码 -->
+<view class="hint" wx:if="{{errorCode}}">
+  <view class="hint-name hint-error">
+    <view class="hint-errorCode">
+      <view class="tips tips-left">抱歉，暂不支持此二维码。</view>
+      <view class="tips tips-left">点击“我的-使用说明”查看支持的图书。</view>
+    </view>
+    <view class="bottom-btn clearfix">
+      <view class="yes" bindtap="closeError">确定</view>
+    </view>
+  </view>
+</view>
+<!-- <view class="hint" wx:if="{{errorCode}}">
+  <view class="hint-name hint-error">
+    <view class="hint-errorCode">
+      <view class="tips tips-left">抱歉，暂不支持此二维码。</view>
+      <view class="tips tips-left">本程序支持扫描的二维码有：《智能诊断练测考》二维码，《温故知新寒暑假》小程序扫码二维码，初中《全品学练考》自我综合评价二维码，小学《全品学练考》扫码解错题二维码，全品同学辅导扫码登录二维码~</view>
+    </view>
+    <view class="bottom-btn clearfix">
+      <view class="yes" bindtap="closeError">确定</view>
+    </view>
+  </view>
+</view> -->

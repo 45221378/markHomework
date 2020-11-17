@@ -1,0 +1,9 @@
+{
+    "usingComponents": {
+        "pickerSecond": "/component/pickerSecond/pickerSecond",
+        "circle": "/component/circle/circle"
+    },
+    "navigationStyle": "custom",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "dark"
+}

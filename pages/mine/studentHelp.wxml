@@ -1,0 +1,7 @@
+<!--pages/mine/studentHelp.wxml-->
+    <!-- <web-view src='https://fudao.canpoint.net'></web-view>   -->
+    <!-- <web-view src='https://www.quanpinzaixian.com/#/oneonone'></web-view>   -->
+
+    <web-view src="{{src}}"></web-view>
+
+

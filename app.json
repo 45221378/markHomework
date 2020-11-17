@@ -1,0 +1,76 @@
+{
+    "pages": [
+        "pages/scanWork/scanWork",
+        "pages/class/addclass/addclass",
+        "pages/class/classInfo/classInfo",
+        "pages/class/myclass/myclass",
+        "pages/workReport/workReport",
+        "pages/mybook/mybook",
+        "pages/mine/mine",
+        "pages/markWrongList/markWrongList",
+        "pages/errorList/errorList",
+        "pages/wrongQuesTable/bookWrongQues",
+        "pages/wrongQuesTable/wrongQuesTable",
+        "pages/login/login",
+        "pages/sortWrongList/arrageWrongList",
+        "pages/allwrongQues/wrongQuesList",
+        "pages/pointTrain/exportError",
+        "pages/allwrongQues/checkReadyQues",
+        "pages/mine/studentHelp",
+        "pages/mine/userLenge",
+        "pages/mine/explain",
+        "pages/mine/service",
+        "pages/phoneReg/phoneReg",
+        "pages/sortWrongList/sortWrongList",
+        "pages/cropper/cropper",
+        "pages/cropper/remark",
+        "pages/uploadHomework/uploadHomework",
+        "pages/restImg/checkRestImg",
+        "pages/resetPsd/resetPsd",
+        "pages/findPsd/findPsd",
+        "pages/agreement/agreement",
+        "pages/pointTrain/pointTrain"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "WeChat",
+        "navigationBarTextStyle": "black"
+    },
+    "usingComponents": {
+        "parser": "component/parser/parser",
+        "parser-group": "component/parser-group/parser-group",
+        "image-cropper": "component/image-cropper/image-cropper"
+    },
+    "tabBar": {
+        "color": "#A4A3A3",
+        "selectedColor": "#146BB3",
+        "list": [{
+                "pagePath": "pages/errorList/errorList",
+                "text": "错题集",
+                "iconPath": "images/icon/errorList-1.png",
+                "selectedIconPath": "images/icon/errorList-2.png"
+            },
+            {
+                "pagePath": "pages/scanWork/scanWork",
+                "text": "作业",
+                "iconPath": "images/icon/homework-1.png",
+                "selectedIconPath": "images/icon/homework-2.png"
+            },
+            {
+                "pagePath": "pages/mine/mine",
+                "text": "我的",
+                "iconPath": "images/icon/mine-1.png",
+                "selectedIconPath": "images/icon/mine-2.png"
+            }
+        ]
+    },
+    "networkTimeout": {
+        "request": 200000,
+        "connectSocket": 200000,
+        "uploadFile": 200000,
+        "downloadFile": 200000
+    },
+    "style": "v2",
+    "sitemapLocation": "sitemap.json"
+}

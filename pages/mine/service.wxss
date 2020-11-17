@@ -1,0 +1,101 @@
+/* pages/mine/service.wxss */
+
+.service {
+    background-color: #f2f2f2;
+    min-height: 100vh;
+    padding: 0 0 40rpx 0;
+}
+
+.service .tips {
+    color: #4f6f8e;
+    font-size: 24rpx;
+    height: 50rpx;
+    line-height: 50rpx;
+    background-color: #daedff;
+    text-align: center;
+    width: 100%;
+}
+
+.service .ul .bear {
+    width: 40rpx;
+    height: 40rpx;
+    margin: 20rpx 0 0 40rpx;
+}
+
+.service .ul .ul-content {
+    background-color: #fff;
+    max-width: 530rpx;
+    padding: 30rpx;
+    font-size: 24rpx;
+    color: #333;
+    border-radius: 10rpx;
+    margin: 10rpx 0 0 60rpx;
+}
+
+.service .ul .ul-content .li {
+    font-size: 24rpx;
+    color: #2896fe;
+    line-height: 46rpx;
+    border: 1rpx solid #2896fe;
+    padding: 0 20rpx;
+    border-radius: 23rpx;
+    margin-top: 20rpx;
+    display: inline-block;
+}
+
+.service .ul .ul-content .li-btn {
+    font-size: 24rpx;
+    color: #2896fe;
+    line-height: 46rpx;
+    border: 1rpx solid #2896fe;
+    border-radius: 23rpx;
+    margin-top: 20rpx;
+    display: inline-block;
+    text-align: left;
+    padding: 0 20rpx;
+    width: 250rpx;
+}
+
+.service .ul .ul-content .checked {
+    background-color: #2896fe !important;
+    color: #fff !important;
+}
+
+.service .ul-list {}
+
+.service .a-ques {
+    background-color: #2896fe;
+    color: #fff;
+    line-height: 46rpx;
+    border-radius: 23rpx 0rpx 20rpx 23rpx;
+    font-size: 24rpx;
+    max-width: 530rpx;
+    display: inline-block;
+    padding: 4rpx 20rpx;
+    text-align: left;
+}
+
+.service .a-answ {
+    background-color: #fff;
+    color: #2896fe;
+    border-radius: 23rpx;
+    line-height: 46rpx;
+    font-size: 24rpx;
+    display: inline-block;
+    max-width: 530rpx;
+    padding: 4rpx 20rpx;
+}
+
+.mgt30 {
+    margin-top: 30rpx !important;
+}
+
+.service .ul-list-ques {
+    text-align: right;
+    margin: 40rpx 40rpx 0 0;
+}
+
+.service .ul-list-answ {
+    text-align: left;
+    margin: 10rpx 0 0 60rpx;
+}

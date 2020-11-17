@@ -1,0 +1,445 @@
+.question {
+    background-color: #fff;
+    height: 100vh;
+    display: flex;
+    box-sizing: border-box;
+}
+
+.question swiper-item {
+    box-sizing: border-box;
+    overflow: visible !important;
+}
+
+.sortWrongList {
+    background: #f9f9f9;
+}
+
+.sortWrongList .title-top {
+    position: relative;
+}
+
+.sortWrongList .return {
+    width: 30rpx;
+    height: 30rpx;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 30rpx 30rpx 28rpx 40rpx;
+}
+
+.sortWrongList .title-top {
+    font-size: 32rpx;
+    color: #000;
+    display: block;
+    text-align: center;
+    padding: 6vh 0 0rpx 0;
+    height: 10vh;
+    background-color: #fff;
+    z-index: 9999;
+    font-weight: 600;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.sortWrongList .noData image {
+    width: 370rpx;
+    height: 280rpx;
+    margin: 100rpx auto 20rpx;
+    display: block;
+}
+
+.sortWrongList .noData .say {
+    font-size: 30rpx;
+    color: #999;
+}
+
+.sortWrongList .noData .say text {
+    display: block;
+    line-height: 50rpx;
+    text-align: center;
+}
+
+.sortWrongList .title {
+    text-align: left;
+    font-size: 28rpx;
+    display: block;
+    padding: 20rpx 0 20rpx 0;
+    background: #fff;
+    padding-left: 40rpx;
+    margin-top: 20rpx;
+}
+
+.sortWrongList .title .section-name {
+    width: 650rpx;
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sortWrongList .title .num {
+    margin-left: 20rpx;
+    font-size: 28rpx;
+    vertical-align: middle;
+}
+
+.sortWrongList text {
+    /* font-size: 30rpx; */
+    text-align: justify;
+}
+
+.sortWrongList .title .remark {
+    height: 44rpx;
+    background: #fff;
+    color: #2896fe;
+    font-size: 26rpx;
+    text-align: center;
+    line-height: 40rpx;
+    border-radius: 26rpx;
+    margin-right: 20rpx;
+    border: 2rpx solid #2896fe;
+    width: 200rpx;
+    float: right;
+}
+
+.sortWrongList .content {
+    margin-top: 20rpx;
+    background: #fff;
+    padding: 30rpx 30rpx 50rpx 30rpx;
+}
+
+.mgt10 {
+    margin-bottom: 10rpx;
+}
+
+.sortWrongList .content .index .i {
+    padding: 0 20rpx;
+    height: 44rpx;
+    background: #fff;
+    color: #2896fe;
+    font-size: 26rpx;
+    text-align: center;
+    line-height: 40rpx;
+    border-radius: 26rpx;
+    margin: 0 20rpx 20rpx 0;
+    border: 2rpx solid #2896fe;
+    display: block;
+    float: left;
+}
+
+.sortWrongList .content .index .checked {
+    background: #2896fe;
+    color: #fff;
+}
+
+.sortWrongList .video {
+    font-size: 30rpx;
+    float: left;
+    margin: 20rpx 20rpx 0 0;
+}
+
+.sortWrongList .seeVideo {
+    height: 180rpx;
+    width: 260rpx;
+    float: left;
+    margin: 20rpx 20rpx 0 0;
+}
+
+.sortWrongList .myanswer {
+    /* font-size: 30rpx; */
+    margin: 40rpx 0rpx 0 0;
+    vertical-align: middle;
+}
+
+.sortWrongList .mythink {
+    font-size: 30rpx;
+    float: left;
+    margin: 20rpx 20rpx 20rpx 0;
+}
+
+.sortWrongList .error {
+    color: #fe2841;
+    border: 2rpx solid #fe2841;
+    min-width: 72rpx;
+    padding: 0 14rpx;
+    height: 44rpx;
+    font-size: 24rpx;
+    border-radius: 26rpx;
+    text-align: center;
+    line-height: 40rpx;
+    /* margin: 10rpx 0; */
+    display: inline-block;
+}
+
+.sortWrongList .noerror {
+    color: #2896fe;
+    border: 2rpx solid #2896fe;
+    width: 72rpx;
+    height: 44rpx;
+    font-size: 24rpx;
+    border-radius: 26rpx;
+    text-align: center;
+    line-height: 40rpx;
+    margin: 20rpx 0;
+    display: inline-block;
+}
+
+.sortWrongList .noerror image {
+    width: 30rpx;
+    height: 32rpx;
+    vertical-align: middle;
+}
+
+.sortWrongList .answerdetail {
+    font-size: 30rpx;
+    float: left;
+    margin: 0 20rpx 20rpx 0;
+}
+
+.sortWrongList .changeAns {
+    display: flex;
+}
+
+.sortWrongList .textarea {
+    background: #f9f9f9;
+    color: #000;
+    font-size: 26rpx;
+    border: 2rpx solid #eee;
+    height: 200rpx;
+    padding: 10rpx;
+    flex: 1;
+    border-radius: 12rpx;
+    margin: 20rpx 0 0 0;
+    z-index: 0;
+}
+
+.opacity0 {
+    opacity: 0;
+    position: absolute;
+    left: 500rpx;
+    width: 100rpx;
+    height: 100rpx;
+}
+
+.autoflex {
+    width: 100%;
+    height: 100%;
+}
+
+.black {
+    color: #a0a0a0;
+}
+
+.sortWrongList .sub {
+    font-size: 30rpx;
+    color: #2896fe;
+    width: 80rpx;
+    height: 200rpx;
+    padding-left: 20rpx;
+}
+
+.sortWrongList .see {
+    font-size: 30rpx;
+    color: #2896fe;
+    display: inline-block;
+}
+
+.padt20 {
+    padding-top: 20rpx;
+}
+
+.padt30 {
+    padding-top: 30rpx;
+}
+
+.padt34 {
+    padding-top: 34rpx;
+}
+
+.padt40 {
+    padding-top: 40rpx;
+}
+
+.mgbt {
+    margin: 30rpx 0 10rpx 0;
+}
+
+.sortWrongList .submit {
+    width: 631rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    padding: 0;
+    font-size: 28rpx;
+    color: #fff;
+    border-radius: 40rpx;
+    background-color: #2896fe;
+    margin-top: 50rpx;
+}
+
+.sortWrongList .clearflex {
+    display: flex;
+}
+
+.sortWrongList .ansewrtext {
+    font-size: 30rpx;
+    width: 122rpx;
+    text-align: right;
+}
+
+.sortWrongList .errorright {
+    font-size: 30rpx;
+    line-height: 40rpx;
+    width: 550rpx;
+    padding-left: 24rpx;
+}
+
+.sortWrongList .seeImg {
+    margin: 40rpx 0 0 20rpx;
+    position: relative;
+}
+
+.sortWrongList .bannerImg {
+    width: 260rpx;
+    height: 180rpx;
+}
+
+.sortWrongList .playImg {
+    width: 50rpx;
+    height: 50rpx;
+    position: absolute;
+    top: 70rpx;
+    left: 110rpx;
+}
+
+.sortWrongList .change-remarks {
+    color: #2896fe;
+    padding-left: 30rpx;
+    margin: 44rpx 0 0 0;
+}
+
+.sortWrongList .content-name {
+    font-size: 28rpx;
+    width: 400rpx;
+    margin: 44rpx 0 0 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.sortWrongList .audio {
+    position: relative;
+}
+
+.sortWrongList .audio .playaudioImg {
+    width: 40rpx;
+    height: 40rpx;
+    z-index: 999;
+    padding: 30rpx 30rpx 30rpx 0;
+}
+
+.sortWrongList .audio .audioflex {
+    display: flex;
+    align-items: center;
+}
+
+.sortWrongList .audio .audioflex .timelong {
+    font-size: 24rpx;
+}
+
+.sortWrongList .rotate {
+    width: 40rpx;
+    height: 40rpx;
+    animation: a 1s linear infinite;
+    margin: 30rpx 30rpx 30rpx 0;
+}
+
+@keyframes a {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    25% {
+        -webkit-transform: rotate(90deg);
+    }
+    50% {
+        -webkit-transform: rotate(180deg);
+    }
+    75% {
+        -webkit-transform: rotate(270deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+.sortWrongList .add-btn {
+    height: 50rpx;
+    width: 50rpx;
+    border-radius: 50%;
+    background-color: #2896fe;
+    color: #fff;
+    line-height: 48rpx;
+    text-align: center;
+    font-size: 34rpx;
+    margin: 40rpx 0 0 20rpx;
+}
+
+.mgt20 {
+    margin: 20rpx 0 0 0;
+}
+
+.sortWrongList .picall {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sortWrongList .picall .pic {
+    height: 150rpx;
+    width: 126rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.sortWrongList .picall .pic .delete-btn {
+    position: absolute;
+    right: 0rpx;
+    top: 0rpx;
+    color: #333;
+}
+
+.sortWrongList .picall .pic .weui-uploader__img {
+    height: 110rpx;
+    width: 86rpx;
+}
+
+.sortWrongList .master {
+    display: flex;
+    align-items: center;
+}
+
+.sortWrongList .master image {
+    height: 36rpx;
+    width: 36rpx;
+}
+
+.sortWrongList .master .have {
+    font-size: 20rpx;
+    color: #333;
+    margin-left: 8rpx;
+}
+
+.mgtr40 {
+    margin: 40rpx 40rpx 0 0;
+}
+
+.mgt40 {
+    margin: 40rpx 0 0 0;
+}
+
+.font28 {
+    font-size: 28rpx;
+}

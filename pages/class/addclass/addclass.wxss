@@ -1,0 +1,44 @@
+/* pages/myclass/addclass.wxss */
+.addclass {}
+
+.addclass .addclass-search {
+    background-color: #f9f9f9;
+    padding: 40rpx 46rpx;
+}
+
+.addclass .addclass-search .search-input {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 26rpx;
+    color: #999;
+    width: 100%;
+    height: 76rpx;
+    border: 1rpx solid #ddd;
+    border-radius: 38rpx;
+}
+
+.addclass .addclass-search .search-input .search {
+    width: 28rpx;
+    height: 28rpx;
+    margin: 0 20rpx 0 30rpx;
+}
+
+.addclass .addclass-search .search-input input {
+    height: 100%;
+    flex: 1;
+}
+
+.addclass .addclass-search .search-input .sousuo {
+    font-size: 30rpx;
+    color: #333;
+    background-color: #ddd;
+    width: 126rpx;
+    height: 76rpx;
+    border-radius: 0 38rpx 38rpx 0;
+    text-align: center;
+    line-height: 72rpx;
+}
+.addclass .addclass-main{
+
+}

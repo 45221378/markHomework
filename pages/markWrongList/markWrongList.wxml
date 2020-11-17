@@ -1,0 +1,352 @@
+<!-- pages/markWrongList/markWrongList.wxml -->
+<wxs src="./../../utils/check.wxs" module="tools" />
+<view class="markWrongList">
+  <text class="top">当前作业：{{section_name}}</text>
+  <view class="question">
+    <block wx:for="{{page}}" wx:for-item="pageItem" wx:key="pageindex">
+      <view class="">
+        <view class="ques-num">{{pageItem.name}}</view>
+        <block wx:for="{{pageItem.content}}" wx:for-item="conItem" wx:key="conindex">
+          <view class="ques-num">{{conItem.name}}</view>
+          <block wx:for="{{conItem.content}}" wx:for-item="item" wx:key="qid">
+            <view wx:if="{{item.content}}">
+              <view class="ques-num">{{item.name}}</view>
+              <block wx:for="{{item.content}}" wx:for-item="ii" wx:key="iit">
+                <view class="easy" hover-class="none" hover-stop-propagation="false">
+                  <!-- 大题的情况 无小题 -->
+                  <view class="easy-son" wx:if="{{ii.child===0}}">
+                    <!-- 客观题 单选题 -->
+                    <view wx:if="{{ii.quesType===1}}">
+                      <view class="right-answer">
+                        <text>{{ii.index}}</text>
+                        . 正确答案：
+                        <text>{{ii.answers}}</text>
+                      </view>
+                      <view class="taps">
+                        <text class="left">标记我的答案：</text>
+                        <view class="answer clearfix">
+                          <block wx:for="{{ii.options}}" wx:for-item="it" wx:key="index">
+                            <view bindtap="onechecked" data-datarow='{{ii}}' data-it="{{it}}" data-indexarr="{{ii.index}}" class="ques {{ii.checked==it&&ii.checked==ii.answers?'checked':ii.checked==it?'checkedRed':''}}">
+                              {{it}}
+                            </view>
+                          </block>
+                        </view>
+                      </view>
+                    </view>
+                    <!-- 客观题 判断题 -->
+                    <view wx:if="{{ii.quesType===6}}">
+                      <view class="right-answer">
+                        <text>{{ii.index}}</text>
+                        . 正确答案：
+                        <text>{{ii.answers}}</text>
+                      </view>
+                      <view class="taps">
+                        <text class="left">标记我的答案：</text>
+                        <view class="answer clearfix">
+                          <block wx:for="{{ii.options}}" wx:for-item="it" wx:key="*this">
+                            <view bindtap="onechecked" data-datarow='{{ii}}' data-it="{{it}}" data-indexarr="{{ii.index}}" class="ques {{ii.checked==it&&ii.checked==ii.answers?'checked':ii.checked==it?'checkedRed':''}}">
+                              {{it}}
+                            </view>
+                          </block>
+                        </view>
+                      </view>
+                    </view>
+                    <!-- 客观题 多选题 -->
+                    <view wx:if="{{ii.quesType===2}}">
+                      <view class="right-answer">
+                        <text>{{ii.index}}</text>
+                        . 正确答案：
+                        <text>{{ii.answers}}</text>
+                      </view>
+                      <view class="taps">
+                        <text class="left">标记我的答案：</text>
+                        <view class="answer clearfix">
+                          <block wx:for="{{ii.options}}" wx:for-item="it" wx:key="*this">
+                            <view bindtap="doublechecked" data-datarow='{{ii}}' data-it="{{it}}" data-indexarr="{{ii.index}}" class="ques {{tools.bar(ii.checked,it)&&tools.bar(ii.answers,it)?'checked':tools.bar(ii.checked,it)?'checkedRed':''}}">
+                              {{it}}
+                            </view>
+                          </block>
+                        </view>
+                      </view>
+                    </view>
+                    <!-- 主观题 -->
+                    <view wx:if="{{ii.quesType===300}}">
+                      <view class="right-answer">
+                        <view class="nochildren">
+                          <text>{{ii.index}}</text>
+                          . 正确答案：
+                          <text></text>
+                        </view>
+                        <parser html="{{ii.newAnwsers}}" />
+                      </view>
+                      <view class="taps">
+                        <text class="left">标记我的答案：</text>
+                        <view class="answer clearfix">
+                          <view class="ques unormal {{ii.checked===1?'checked':''}}" bindtap="onechecked" data-datarow='{{ii}}' data-it="{{1}}" data-indexarr="{{ii.index}}">
+                            我答对了
+                          </view>
+                          <view class="ques unormal {{ii.checked===0?'checkedRed':''}}" bindtap="onechecked" data-datarow='{{ii}}' data-it="{{0}}" data-indexarr="{{ii.index}}">
+                            标为错题
+                          </view>
+                        </view>
+                      </view>
+                    </view>
+                  </view>
+                  <!-- 大题的情况 有小题 -->
+                  <view class="easy-son" wx:if="{{ii.child===1}}">
+                    <block wx:for="{{ii.children}}" wx:for-item="itch" wx:key="qid" wx:for-index="indexArrii">
+                      <!-- 特殊题型 7选5 -->
+                      <!-- 大题的情况 有小题  单选题 -->
+                      <view wx:if="{{itch.templateType===1}}">
+                        <view class="right-answer">
+                          <text>{{ii.stem}}.{{itch.index}}</text>
+                          正确答案：
+                          <text>{{itch.answers}}</text>
+                        </view>
+                        <view class="taps">
+                          <text class="left">标记我的答案：</text>
+                          <view class="answer clearfix">
+                            <block wx:for="{{itch.options}}" wx:for-item="itopt" wx:key="*this">
+                              <view bindtap="onechildchecked" data-datarow='{{ii}}' data-it="{{itopt}}" data-indexarr="{{ii.index}}" data-indexarrii="{{indexArrii}}" class="ques {{tools.bar(itch.checked,itopt)&&itopt==itch.answers?'checked':tools.bar(itch.checked,itopt)?'checkedRed':''}}">
+                                {{itopt}}
+                              </view>
+                            </block>
+                          </view>
+                        </view> 
+                      </view>
+                      <!-- 大题的情况 有小题  多选题 -->
+                      <view wx:if="{{itch.templateType===2}}">
+                        <view class="right-answer">
+                          <text>{{ii.stem}}.{{itch.index}}</text>
+                          正确答案：
+                          <text>{{itch.answers}}</text>
+                        </view>
+                        <view class="taps">
+                          <text class="left">标记我的答案：</text>
+                          <view class="answer clearfix">
+                            <block wx:for="{{itch.options}}" wx:for-item="itopt" wx:key="*this">
+                              <view bindtap="doublechildchecked" data-datarow='{{ii}}' data-it="{{itopt}}" data-indexarr="{{ii.index}}" data-indexarrii="{{indexArrii}}" class="ques {{tools.bar(itch.checked,itopt)&&tools.bar(itch.answers,itopt)?'checked':tools.bar(itch.checked,itopt)?'checkedRed':''}}">
+                                {{itopt}}
+                              </view>
+                            </block>
+                          </view>
+                        </view>
+                      </view>
+                      <!-- 大题的情况 有小题  判断题 -->
+                      <view wx:if="{{itch.templateType===6}}">
+                        <view class="right-answer">
+                          <text>{{ii.stem}}.{{itch.index}}</text>
+                          正确答案：
+                          <text>{{itch.answersPan}}</text>
+                        </view>
+                        <view class="taps">
+                          <text class="left">标记我的答案：</text>
+                          <view class="answer clearfix">
+                            <block wx:for="{{itch.options}}" wx:for-item="itopt" wx:key="*this">
+                              <view bindtap="onechildchecked" data-datarow='{{ii}}' data-it="{{itopt}}" data-indexarr="{{ii.index}}" data-indexarrii="{{indexArrii}}" class="ques {{itch.checked==itopt&&itch.checked==itch.answersPan?'checked':itch.checked==itopt?'checkedRed':''}}">
+                                {{itopt}}
+                              </view>
+                            </block>
+                          </view>
+                        </view>
+                      </view>
+                      <!-- 大题的情况 有小题  客观题 -->
+                      <view wx:if="{{itch.templateType==300}}">
+                        <view class="right-answer">
+                          <view class="nochildren">
+                            <text>{{ii.index}}.{{itch.index}}</text>
+                            正确答案：
+                            <text></text>
+                          </view>
+                          <parser html="{{itch.newAnwsers}}" />
+                        </view>
+                        <view class="taps">
+                          <text class="left">标记我的答案：</text>
+                          <view class="answer clearfix">
+                            <block wx:for="{{itch.options}}" wx:for-item="itopt" wx:key="*this">
+                              <view bindtap="onechildchecked" data-datarow='{{ii}}' data-it="{{itopt}}" data-indexarr="{{ii.index}}" data-indexarrii="{{indexArrii}}" class="ques unormal  {{itch.checked=='1'&&itch.checked==itopt?'checked':itch.checked==0&&itch.checked==itopt?'checkedRed':''}}">
+                                {{itopt=='1'?'我答对了':'标为错题'}}
+                              </view>
+                            </block>
+                          </view>
+                        </view>
+                      </view>
+                    </block>
+                  </view>
+                </view>
+              </block>
+            </view>
+            <view class="easy" wx:if="{{!item.content}}">
+              <!-- 大题的情况 无小题 -->
+              <view class="easy-son" wx:if="{{item.child===0}}">
+                <!-- 客观题 单选题 -->
+                <view wx:if="{{item.quesType===1}}">
+                  <view class="right-answer">
+                    <text>{{item.index}}</text>
+                    . 正确答案：
+                    <text>{{item.answers}}</text>
+                  </view>
+                  <view class="taps">
+                    <text class="left">标记我的答案：</text>
+                    <view class="answer clearfix">
+                      <block wx:for="{{item.options}}" wx:for-item="it" wx:key="index">
+                        <view bindtap="onechecked" data-datarow='{{item}}' data-it="{{it}}" data-indexarr="{{item.index}}" class="ques {{item.checked==it&&item.checked==item.answers?'checked':item.checked==it?'checkedRed':''}}">
+                          {{it}}
+                        </view>
+                      </block>
+                    </view>
+                  </view>
+                </view>
+                <!-- 客观题 判断题 -->
+                <view wx:if="{{item.quesType===6}}">
+                  <view class="right-answer">
+                    <text>{{item.index}}</text>
+                    . 正确答案：
+                    <text>{{item.answers}}</text>
+                  </view>
+                  <view class="taps">
+                    <text class="left">标记我的答案：</text>
+                    <view class="answer clearfix">
+                      <block wx:for="{{item.options}}" wx:for-item="it" wx:key="*this">
+                        <view bindtap="onechecked" data-datarow='{{item}}' data-it="{{it}}" data-indexarr="{{item.index}}" class="ques {{item.checked==it&&item.checked==item.answers?'checked':item.checked==it?'checkedRed':''}}">
+                          {{it}}
+                        </view>
+                      </block>
+                    </view>
+                  </view>
+                </view>
+                <!-- 客观题 多选题 -->
+                <view wx:if="{{item.quesType===2}}">
+                  <view class="right-answer">
+                    <text>{{item.index}}</text>
+                    . 正确答案：
+                    <text>{{item.answers}}</text>
+                  </view>
+                  <view class="taps">
+                    <text class="left">标记我的答案：</text>
+                    <view class="answer clearfix">
+                      <block wx:for="{{item.options}}" wx:for-item="it" wx:key="*this">
+                        <view bindtap="doublechecked" data-datarow='{{item}}' data-it="{{it}}" data-indexarr="{{item.index}}" class="ques {{tools.bar(item.checked,it)&&tools.bar(item.answers,it)?'checked':tools.bar(item.checked,it)?'checkedRed':''}}">
+                          {{it}}
+                        </view>
+                      </block>
+                    </view>
+                  </view>
+                </view>
+                <!-- 主观题 -->
+                <view wx:if="{{item.quesType===300}}">
+                  <view class="right-answer">
+                    <view class="nochildren">
+                      <text>{{item.index}}</text>
+                      . 正确答案：
+                      <text></text>
+                    </view>
+                    <parser html="{{item.newAnwsers}}" />
+                  </view>
+                  <view class="taps">
+                    <text class="left">标记我的答案：</text>
+                    <view class="answer clearfix">
+                      <view class="ques unormal {{item.checked===1?'checked':''}}" bindtap="onechecked" data-datarow='{{item}}' data-it="{{1}}" data-indexarr="{{item.index}}">
+                        我答对了
+                      </view>
+                      <view class="ques unormal {{item.checked===0?'checkedRed':''}}" bindtap="onechecked" data-datarow='{{item}}' data-it="{{0}}" data-indexarr="{{item.index}}">
+                        标为错题
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+              <!-- 大题的情况 有小题 -->
+              <view class="easy-son" wx:if="{{item.child===1}}">
+                <block wx:for="{{item.children}}" wx:for-item="itch" wx:key="qid" wx:for-index="indexArrii">
+                  <!-- 特殊题型 7选5 -->
+                  <!-- 大题的情况 有小题  单选题 -->
+                  <view wx:if="{{itch.templateType===1}}">
+                    <view class="right-answer">
+                      <text>{{item.stem}}.{{itch.index}}</text>
+                      正确答案：
+                      <text>{{itch.answers}}</text>
+                    </view>
+                    <view class="taps">
+                      <text class="left">标记我的答案：</text>
+                      <view class="answer clearfix">
+                        <block wx:for="{{itch.options}}" wx:for-item="itopt" wx:key="*this">
+                          <view bindtap="onechildchecked" data-datarow='{{item}}' data-it="{{itopt}}" data-indexarr="{{item.index}}" data-indexarrii="{{indexArrii}}" class="ques {{tools.bar(itch.checked,itopt)&&itopt==itch.answers?'checked':tools.bar(itch.checked,itopt)?'checkedRed':''}}">
+                            {{itopt}}
+                          </view>
+                        </block>
+                      </view>
+                    </view>
+                  </view>
+                  <!-- 大题的情况 有小题  多选题 -->
+                  <view wx:if="{{itch.templateType===2}}">
+                    <view class="right-answer">
+                      <text>{{item.stem}}.{{itch.index}}</text>
+                      正确答案：
+                      <text>{{itch.answers}}</text>
+                    </view>
+                    <view class="taps">
+                      <text class="left">标记我的答案：</text>
+                      <view class="answer clearfix">
+                        <block wx:for="{{itch.options}}" wx:for-item="itopt" wx:key="*this">
+                          <view bindtap="doublechildchecked" data-datarow='{{item}}' data-it="{{itopt}}" data-indexarr="{{item.index}}" data-indexarrii="{{indexArrii}}" class="ques {{tools.bar(itch.checked,itopt)&&tools.bar(itch.answers,itopt)?'checked':tools.bar(itch.checked,itopt)?'checkedRed':''}}">
+                            {{itopt}}
+                          </view>
+                        </block>
+                      </view>
+                    </view>
+                  </view>
+                  <!-- 大题的情况 有小题  判断题 -->
+                  <view wx:if="{{itch.templateType===6}}">
+                    <view class="right-answer">
+                      <text>{{item.stem}}.{{itch.index}}</text>
+                      正确答案：
+                      <text>{{itch.answersPan}}</text>
+                    </view>
+                    <view class="taps">
+                      <text class="left">标记我的答案：</text>
+                      <view class="answer clearfix">
+                        <block wx:for="{{itch.options}}" wx:for-item="itopt" wx:key="*this">
+                          <view bindtap="onechildchecked" data-datarow='{{item}}' data-it="{{itopt}}" data-indexarr="{{item.index}}" data-indexarrii="{{indexArrii}}" class="ques {{itch.checked==itopt&&itch.checked==itch.answersPan?'checked':itch.checked==itopt?'checkedRed':''}}">
+                            {{itopt}}
+                          </view>
+                        </block>
+                      </view>
+                    </view>
+                  </view>
+                  <!-- 大题的情况 有小题  客观题 -->
+                  <view wx:if="{{itch.templateType==300}}">
+                    <view class="right-answer">
+                      <view class="nochildren">
+                        <text>{{item.stem}}.{{itch.index}}</text>
+                        正确答案：
+                        <text></text>
+                      </view>
+                      <parser html="{{itch.newAnwsers}}" />
+                    </view>
+                    <view class="taps">
+                      <text class="left">标记我的答案：</text>
+                      <view class="answer clearfix">
+                        <block wx:for="{{itch.options}}" wx:for-item="itopt" wx:key="*this">
+                          <view bindtap="onechildchecked" data-datarow='{{item}}' data-it="{{itopt}}" data-indexarr="{{item.index}}" data-indexarrii="{{indexArrii}}" class="ques unormal  {{itch.checked=='1'&&itch.checked==itopt?'checked':itch.checked==0&&itch.checked==itopt?'checkedRed':''}}">
+                            {{itopt=='1'?'我答对了':'标为错题'}}
+                          </view>
+                        </block>
+                      </view>
+                    </view>
+                  </view>
+                </block>
+              </view>
+            </view>
+          </block>
+        </block>
+      </view>
+    </block>
+    <!-- 提交的 my_answer  主观题 正确 1 错误 0 -->
+    <!-- stem 有小题 显示 此字段，找childs -->
+    <!-- questionType  里面的id 为 1 2 4表示是客观题 -->
+  </view>
+  <view class="bottom-btn">
+    <button class="submit button" bindtap="subTip">{{btnTips}}</button>
+  </view>
+</view>

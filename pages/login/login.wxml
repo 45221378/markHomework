@@ -1,0 +1,20 @@
+<!--pages/login.wxml-->
+<view class="login">
+  <image class='login-logo' src='/images/logo.png' ></image>
+  <view class="title" >全品作业小助手</view>
+  <view class="title-little ">对答案、标错题、进行针对训练</view>
+  <button class="login-wx button" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" wx:if="{{checked}}">微信授权登录</button>
+  <button class="login-wx button bg99d" bindtap="wxLogin" wx:if="{{!checked}}">微信授权登录</button>
+
+  <button class="login-phone button" bindtap="phoneReg">手机验证码登录</button>
+  <view class="bottom">
+    <label >
+      <!-- <checkbox-group bindchange="checkboxChange" class="checkbox" data-checked="{{checked}}">
+        <checkbox value="{{checked}}" checked="{{checked}}"/>
+      </checkbox-group> -->
+      <text class="agree">点击登录，即表示已阅读并同意</text>
+    </label>
+    <text class="reg " bindtap="agreement">《全品作业小助手服务协议》</text>
+  </view>
+</view> 
+

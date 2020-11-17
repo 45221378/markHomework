@@ -1,0 +1,118 @@
+{
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "useMultiFrameRuntime": false,
+    "useApiHook": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "useIsolateContext": true,
+    "useCompilerModule": false,
+    "userConfirmedUseCompilerModuleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.10.4",
+  "appid": "wxb7b1182d2e5c8415",
+  "projectname": "canpoint-wx",
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "isGameTourist": false,
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": 0,
+          "name": "pages/wrongQuesTable/wrongQuesTable",
+          "pathName": "pages/wrongQuesTable/wrongQuesTable",
+          "query": "subjectid=14&stageid=1",
+          "scene": null
+        },
+        {
+          "id": 1,
+          "name": "pages/wrongQuesTable/bookWrongQues",
+          "pathName": "pages/wrongQuesTable/bookWrongQues",
+          "query": "subjectid=14&stageid=1&sectionid=l3Nqn7pL",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/errorList/errorList",
+          "pathName": "pages/errorList/errorList",
+          "query": "subjectid=14&stageid=1&sectionid=l3Nqn7pL",
+          "scene": null
+        },
+        {
+          "id": 3,
+          "name": "pages/workReport/workReport",
+          "pathName": "pages/workReport/workReport",
+          "query": "section_id=l3Nqn7pL&section_name=1 草原&section_time=2020-08-24 01:34:33",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/myclass/myclass",
+          "pathName": "pages/myclass/myclass",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/myclass/addclass",
+          "pathName": "pages/myclass/addclass",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/mine/service",
+          "pathName": "pages/mine/service",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/scanWork/scanWork",
+          "pathName": "pages/scanWork/scanWork",
+          "query": "scene=GUQW36rT",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

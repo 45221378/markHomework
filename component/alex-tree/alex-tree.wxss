@@ -1,0 +1,204 @@
+.ques-num {
+    font-size: 28rpx;
+    color: #333;
+    margin: 0 0 20rpx 0;
+    padding: 0 30rpx;
+
+}
+
+.ques-index {
+    padding: 0 30rpx;
+}
+
+ .i {
+    font-size: 28rpx;
+    color: #2896fe;
+    height: 44rpx;
+    padding: 0 30rpx;
+    border-radius: 22rpx;
+    border: 1rpx solid #2896fe;
+    margin: 0 0 20rpx 20rpx;
+    display: inline-block;
+    text-align: center;
+    line-height: 44rpx;
+}
+
+.wrong {
+    color: #fe2841 !important;
+    border: 1rpx solid #fe2841 !important;
+    background-color: #fff !important;
+}
+
+.double {
+    color: #f3750f !important;
+    border: 1rpx solid #f3750f !important;
+    background-color: #fff !important;
+}
+
+.checked {
+    color: #fff !important;
+    border: 1rpx solid #2896fe !important;
+    background-color: #2896fe !important;
+}
+
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0
+  }
+
+  /* 渲染复杂题块的时候出现的逻辑 */
+.myanswer {
+    /* font-size: 30rpx; */
+    margin: 40rpx 0rpx 0 0;
+    vertical-align: middle;
+}
+
+.see {
+    /* font-size: 30rpx; */
+    color: #2896fe;
+    display: inline-block;
+}
+
+.clearflex {
+    display: flex;
+}
+
+.ansewrtext {
+    /* font-size: 30rpx; */
+    width: 122rpx;
+    text-align: right;
+}
+
+.errorright {
+    /* font-size: 30rpx; */
+    line-height: 40rpx;
+    width: 550rpx;
+    padding-left: 24rpx;
+}
+
+.padt20 {
+    padding-top: 20rpx;
+}
+
+.padt30 {
+    padding-top: 30rpx;
+}
+
+.padt34 {
+    padding-top: 34rpx;
+}
+
+.padt40 {
+    padding-top: 40rpx;
+}
+
+.mgbt {
+    margin: 30rpx 0 10rpx 0;
+}
+
+.error {
+    color: #fe2841;
+    border: 2rpx solid #fe2841;
+    min-width: 72rpx;
+    padding: 0 14rpx;
+    height: 44rpx;
+    font-size: 24rpx;
+    border-radius: 26rpx;
+    text-align: center;
+    line-height: 40rpx;
+    /* margin: 10rpx 0; */
+    display: inline-block;
+}
+
+.noerror {
+    color: #2896fe;
+    border: 2rpx solid #2896fe;
+    width: 72rpx;
+    height: 44rpx;
+    font-size: 24rpx;
+    border-radius: 26rpx;
+    text-align: center;
+    line-height: 40rpx;
+    margin: 20rpx 0;
+    display: inline-block;
+}
+
+.noerror image {
+    width: 30rpx;
+    height: 32rpx;
+    vertical-align: middle;
+}
+
+.answerdetail {
+    font-size: 30rpx;
+    float: left;
+    margin: 0 20rpx 20rpx 0;
+}
+
+.changeAns {
+    display: flex;
+}
+
+.audio {
+    position: relative;
+}
+
+.audio .playaudioImg {
+    width: 40rpx;
+    height: 40rpx;
+    z-index: 999;
+    padding: 30rpx 30rpx 30rpx 0;
+}
+
+.audio .audioflex {
+    display: flex;
+    align-items: center;
+}
+
+.audio .audioflex .timelong {
+    font-size: 24rpx;
+}
+
+ .rotate {
+    width: 40rpx;
+    height: 40rpx;
+    animation: a 1s linear infinite;
+    margin: 30rpx 30rpx 30rpx 0;
+}
+
+@keyframes a {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    25% {
+        -webkit-transform: rotate(90deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(180deg);
+    }
+
+    75% {
+        -webkit-transform: rotate(270deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+.parser-content {
+    margin: 30rpx 0;
+    border-top: 1rpx solid #ddd;
+    border-bottom: 1rpx solid #ddd;
+    padding: 30rpx 15rpx;
+
+}
+
+.posi{
+}

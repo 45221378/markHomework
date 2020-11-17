@@ -1,0 +1,12 @@
+/**app.wxss**/
+@import '/lib/base.wxss';
+@import '/lib/common.wxss';
+
+
+
+
+@font-face {
+  font-family: 'KaiTi';
+  src: url("https://zhzy-zyzs.oss-cn-beijing.aliyuncs.com/fonts/SIMKAI.ttf");
+}
+

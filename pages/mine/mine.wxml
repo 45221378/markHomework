@@ -1,0 +1,149 @@
+<!-- pages/mine/mine.wxml -->
+<view class="mine">
+	<view class="gologin {{bounceInUp}}" wx:if="{{!loginFlag}}">
+		<view class="tips">请先登录再扫码交作业哦~</view>
+		<view class="gobtn" bindtap="gologin">去登录 ></view>
+	</view>
+	<view class="mine-img">
+		<view wx:if="{{formType==0}}">
+			<view class="image">
+				<open-data type="userAvatarUrl"></open-data>
+			</view>
+			<view class="mine-name">
+				<open-data type="userNickName"></open-data>
+			</view>
+		</view>
+		<view class="center" wx:if="{{formType==1}}">
+			<view class="rest-image">
+				<image class="reset" src="../../images/icon/mine-1.png"></image>
+			</view>
+			<view class="mine-name">
+				<text>{{userPhone}}</text>
+			</view>
+		</view>
+		<view class="center" wx:if="{{!loginFlag}}">
+			<view class="rest-image">
+				<image class="reset" src="../../images/icon/mine-1.png"></image>
+			</view>
+			<view class="mine-nologin">
+				<text>未登录</text>
+			</view>
+		</view>
+		<view class="open-parent" wx:if="{{loginFlag}}">
+			<text>开启家长监管模式</text>
+			<view class="tui-fr">
+				<switch class="" checked="{{isChecked}}" bindchange="changeSwitch" />
+			</view>
+		</view>
+	</view>
+	<view class="ul magt20">
+		<view class="li bordernone">
+			<button class="button contact" bindtap="mybook">我的图书</button>
+			<image class="img-right" src="../../images/icon/right.png"></image>
+		</view>
+		<!--  -->
+		<view class="li noborder" wx:if="{{false}}">
+			<button class="button contact" bindtap="myclass">我的班级</button>
+			<image class="img-right" src="../../images/icon/right.png"></image>
+		</view>
+	</view>
+	<view class="ul">
+		<!-- <view class="li">
+			<button class="button contact" open-type='contact'>在线客服</button>
+			<image class="img-right" src="../../images/icon/right.png"></image>
+		</view> -->
+		<view class="li" bindtap="concatService">
+			<text>联系客服</text>
+			<image class="img-right" src="../../images/icon/right.png"></image>
+		</view>
+		<view class="li" bindtap="agreement">
+			<text>服务协议</text>
+			<image class="img-right" src="../../images/icon/right.png"></image>
+		</view>
+		<view class="li" bindtap="userLenge">
+			<text>使用说明</text>
+			<image class="img-right" src="../../images/icon/right.png"></image>
+		</view>
+		<view class="fuli" wx:if="{{showIcon}}">
+			<view class="x" bindtap="closeIcon">X</view>
+			<image class="img-fixed" bindtap="goIcon"
+				src="http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/oneonone-icon.png"></image>
+		</view>
+
+		<swiper class="swiper" autoplay="true" interval="3000" indicator-dots="true" duration="500" circular="true"
+			indicator-color="#fff" indicator-active-color="#a6d2fd">
+			<block wx:for="{{bannerList}}" wx:key="*this">
+				<swiper-item>
+					<image class="explain" mode="aspectFit" src="{{item.url}}" data-index="{{item.index}}" bindtap="goExplain">
+					</image>
+				</swiper-item>
+			</block>
+		</swiper>
+		<button wx:if="{{loginFlag}}" class="button loginout" bindtap="loginout">退出登录</button>
+	</view>
+</view>
+<!-- 开启监管密码 -->
+<view class="hint" wx:if="{{showPsd}}">
+	<view class="hint-name padt40">
+		<view class="tips">请设置监管密码</view>
+		<view class="hint-form">
+			<view class="input_row" catchtap="getFocus">
+				<view class="pwd_item" wx:for="{{4}}" wx:key="item" wx:for-index="i">
+					<text wx:if="{{pwdVal.length>i}}">{{pwdVal[i]}}</text>
+				</view>
+			</view>
+			<input class="input_control" password focus="{{psdFocus}}" bindinput="inputPwd" maxlength="4" />
+		</view>
+		<view class="bottom-btn clearfix">
+			<view class="btn-left left" bindtap="backout">关闭</view>
+			<view class="btn-right right {{inputDis?'inputDis':''}}" bindtap="surepsd" disabled="{{inputDis}}">
+				确定
+			</view>
+		</view>
+	</view>
+</view>
+<!-- 关闭监管密码 -->
+<view class="hint" wx:if="{{closePsd}}">
+	<view class="hint-name hintheight padt40">
+		<view class="tips">请输入监管密码</view>
+		<view class="hint-form">
+			<view class="input_row" catchtap="getFocus">
+				<view class="pwd_item" wx:for="{{4}}" wx:key="item" wx:for-index="i">
+					<text wx:if="{{pwdVal.length>i}}">{{pwdVal[i]}}</text>
+				</view>
+			</view>
+			<input class="input_control" password focus="{{psdFocus}}" value="{{pwdVal}}" bindinput="inputPwd"
+				maxlength="4" />
+		</view>
+		<view class="findPsd" bindtap="findHintPsd">忘记密码</view>
+		<view class="bottom-btn clearfix">
+			<view class="btn-left left" bindtap="backclose">关闭</view>
+			<view class="btn-right right {{inputDis?'inputDis':''}}" bindtap="closePsd" disabled="{{inputDis}}">
+				确定
+			</view>
+		</view>
+	</view>
+</view>
+<!-- 忘记监管密码 -->
+<view class="hint" wx:if="{{findPsd}}">
+	<view class="hint-name heightclose padt40">
+		<view class="tips">手机号验证</view>
+		<view class="hint-form">
+			<view class="border">
+				<input placeholder="请输入手机号" bindinput='getPhoneValue' disabled="{{true}}" value="{{userPhone}}" name="userPhone"
+					placeholder-class="black" type="number" maxlength="11" auto-focus />
+			</view>
+			<view class="border clearfix">
+				<input class="left userCode" placeholder="请输入验证码" bindinput='getuserCode' value="{{userCode}}" name="userCode"
+					max-length="6" placeholder-class="black" auto-focus />
+				<button class="button getCode" bindtap="getCode" disabled="{{phoneCode}}">
+					{{codename}}
+				</button>
+			</view>
+		</view>
+		<view class="bottom-btn clearfix">
+			<view class="btn-left left" bindtap="closefindPsd">关闭</view>
+			<view class="btn-right right" bindtap="findPsd">确定</view>
+		</view>
+	</view>
+</view>

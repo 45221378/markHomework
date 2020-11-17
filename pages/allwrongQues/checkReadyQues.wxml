@@ -1,0 +1,174 @@
+<wxs src="./../../utils/check.wxs" module="tools" />
+<view class="allwrongQues {{tipsFlag?'scrollFixed':''}}">
+  <view class="allwrongQues-ul" wx:if="{{contentlist.length>0}}">
+    <view class="title" bindtap="changeName">
+      <text class="section-name">{{section_name}}</text>
+      <image src="../../images/icon/modify.png" class="modify"></image>
+    </view>
+    <view class="allwrongQues-li">
+      <view class="allwrongQues-li-content">
+        <parser-group>
+          <recycle-view batch="{{batchSetRecycleData}}" id="recycleId">
+            <recycle-item wx:for="{{contentlist}}" wx:for-item="item" wx:key="index">
+              <view class="allwrongQues-li-top">
+                <view class="master mgr40 heart" bindtap="understand" data-id="{{item.id}}" data-understand="{{item.understand}}">
+                  <image src="../../images/icon/master.png" wx:if="{{item.understand==0}}"></image>
+                  <image src="../../images/icon/master2.png" wx:if="{{item.understand==1}}"></image>
+                  <image src="../../images/icon/heart.png" class="{{item.understand==1?'heartImg ani':'noani'}}"></image>
+                  <view class="have">{{item.understand==0?'掌握':'已掌握'}}</view>
+                </view>
+                <view class="master add" data-id="{{item.id}}" bindtap="deleteques">
+                  <icon type='cancel' class="delete-btn" size="20" color="#999"></icon>
+                  <view class="have">移出题集</view>
+                </view>
+              </view>
+              <!-- 无小题的情况下 -->
+              <view wx:if="{{!item.childrenFlag}}" class="parser-view">
+                <view style="">
+                  <parser html="{{item.indexstem}}" />
+                </view>
+                <view wx:for="{{item.question_data.options}}" wx:for-item="it" wx:key="index">
+                  <parser html="{{it}}" />
+                </view>
+                <!-- 播放音频 -->
+                <view class="audio" wx:if="{{item.question_data.audio!=null}}">
+                  <view class="audioflex">
+                    <image wx:if="{{item.question_data.showaudioImg==3}}" class="rotate" src='../../images/icon/loading.png'></image>
+                    <image wx:if="{{item.question_data.showaudioImg==0}}" bindtap="playbigaudio" data-id="{{item.id}}" data-audiosrc="{{item.question_data.audio}}" class="playaudioImg" src='../../images/icon/aplay.png'></image>
+                    <image wx:if="{{item.question_data.showaudioImg==1}}" bindtap="stopbigaudio" data-id="{{item.id}}" data-audiosrc="{{item.question_data.audio}}" class="playaudioImg" src='../../images/icon/astop.png'></image>
+                    <view class="timelong">
+                      {{item.question_data.currentTime}}/{{item.question_data.durationTotal}}
+                    </view>
+                  </view>
+                </view>
+              </view>
+              <!-- 有小题的情况下 -->
+              <view wx:if="{{item.childrenFlag}}" class="parser-view">
+                <view style="">
+                  <parser lazy-load="true" html="{{item.indexstem}}" />
+                </view>
+                <view wx:for="{{item.question_data.options}}" wx:for-item="it" wx:key="index">
+                  <parser html="{{it}}" />
+                </view>
+                <!-- 播放音频 -->
+                <view class="audio" wx:if="{{item.question_data.audio!=null}}">
+                  <view class="audioflex">
+                    <image wx:if="{{item.question_data.showaudioImg==3}}" class="rotate" src='../../images/icon/loading.png'></image>
+                    <image wx:if="{{item.question_data.showaudioImg==0}}" bindtap="playbigaudio" data-id="{{item.id}}" data-audiosrc="{{item.question_data.audio}}" class="playaudioImg" src='../../images/icon/aplay.png'></image>
+                    <image wx:if="{{item.question_data.showaudioImg==1}}" bindtap="stopbigaudio" data-id="{{item.id}}" data-audiosrc="{{item.question_data.audio}}" class="playaudioImg" src='../../images/icon/astop.png'></image>
+                    <view class="timelong">
+                      {{item.question_data.currentTime}}/{{item.question_data.durationTotal}}
+                    </view>
+                  </view>
+                </view>
+                <block wx:for="{{item.question_data.children}}" wx:for-item="itch" wx:key="index">
+                  <view class="child-parser">
+                    <view class="clearfix">
+                      <view class="myanswer">
+                        <parser html="{{itch.indexChildstem}}" />
+                        <block wx:for="{{itch.options}}" wx:for-item="it" wx:key="index">
+                          <view wx:if="{{item.question_data.template!=14 && item.question_data.template!=22&& item.question_data.template!=29}}">
+                            <parser html="{{it}}" />
+                          </view>
+                        </block>
+                      </view>
+                    </view>
+                  </view>
+                </block>
+              </view>
+              <view class="parser-bottom">
+                <view class="parser-download padr0">
+                  <image src="../../images/icon/download.png"></image>
+                  <view class="have">{{item.download_times}}次</view>
+                </view>
+                <view class="parser-download width400">
+                  <image src="../../images/icon/book.png"></image>
+                  <view class="have">{{item.section_name}}</view>
+                </view>
+                <view class="parser-download">
+                  <image src="../../images/icon/time.png" class="imgright"></image>
+                  <view class="have">{{tools.splitTime(item.created)}}</view>
+                </view>
+              </view>
+            </recycle-item>
+          </recycle-view>
+        </parser-group>
+      </view>
+    </view>
+    <view class="al-buttom">
+      <view class="al-buttom-left" bindtap="showTips">
+        <view class="text">
+          共
+          <text>{{contentlist.length}}</text>
+          道错题
+        </view>
+        <view class="mark">?</view>
+      </view>
+      <view class="al-buttom-right">
+        <view class="al-clear" bindtap="clear">清空全部</view>
+        <view class="al-export" bindtap="export">导出错题</view>
+      </view>
+    </view>
+  </view>
+  <view class="noData" wx:if="{{contentlist.length==0}}">
+    <image src="/images/nodata.png"></image>
+    <view class="say">
+      <text>错题集空空如也~</text>
+      <text>将题目加入错题集可以方便复习哦</text>
+    </view>
+  </view>
+</view>
+<view class="hint" wx:if="{{tipsFlag}}">
+  <view class="hint-name" style="height:470rpx">
+    <view class="tips-title mgt30">关于题量</view>
+    <view class="tips" style="text-align:left">错题本只支持查询从当日起近6个月的错题，因此往期添加的错题可能会由于时间过于久远而消失哦~</view>
+    <view class="tips" style="text-align:left">遇到心仪的错题要及时导出呀~</view>
+    <view class="bottom-btn clearfix">
+      <view class="yes" bindtap="iknow">我知道了</view>
+    </view>
+  </view>
+</view>
+<view class="hint" wx:if="{{radioFlag}}">
+  <view class="hint-content">
+    <image class="know-bear" src="../../images/bear/know-bear.png"></image>
+    <text class="cha" bindtap="cancleCheck">X</text>
+    <view class="form">
+      <view class="title">请选择您想导出的错题类型是</view>
+      <view class="border">
+        <view class="radio-group">
+          <label class="radio" data-variant='2' bindtap="inputchecked">
+            <view class="ui-checkbox">
+              <view class="ui-ckBox-nameBox {{variant==2?'ui-ckBox-namechecked':''}}"></view>
+            </view>
+            <text>只有错题</text>
+          </label>
+          <label class="radio" data-variant='1' bindtap="inputchecked">
+            <view class="ui-checkbox">
+              <view class="ui-ckBox-nameBox {{variant==1?'ui-ckBox-namechecked':''}}"></view>
+            </view>
+            <text>错题和针对训练题</text>
+          </label>
+        </view>
+      </view>
+      <view class="bottom-btn">
+        <button class="button sureChange" bindtap="sureCheck">确定</button>
+        <button class="button cancleChange" bindtap="cancleCheck">取消</button>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="hint" wx:if="{{changeNameFlag}}">
+  <view class="hint-content">
+    <image class="know-bear" src="../../images/bear/know-bear.png"></image>
+    <text class="cha" bindtap="cancleChange">X</text>
+    <view class="form">
+      <view class="border">
+        <input placeholder="输入要修改的错题集名称" bindinput='getName' value="{{errorName}}" name="errorCodeName" placeholder-class="black" maxlength="20" />
+      </view>
+      <view class="bottom-btn">
+        <button class="button sureChange" bindtap="sureChange">确定</button>
+        <button class="button cancleChange" bindtap="cancleChange">取消</button>
+      </view>
+    </view>
+  </view>
+</view>

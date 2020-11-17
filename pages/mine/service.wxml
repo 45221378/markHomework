@@ -1,0 +1,29 @@
+<view class="service">
+  <view class="tips">人工客服服务时间：周一至周五，8:30-17:30</view>
+  <view class="ul">
+    <image class="bear" src="/images/bear/service-bear.png" />
+    <view class="ul-content">
+      <view class="ul-top">您好，我是客服小熊，有什么可以帮助到您？</view>
+      <block wx:for="{{serviceJson}}" wx:for-item="item" wx:key="index">
+        <button wx:if="{{item.id=='000'}}" class="li-btn  button" open-type='contact'>{{item.ques}}</button>
+        <view>
+          <view  wx:if="{{item.id!='000'}}" class="li {{item.id==checkedId?'checked':''}}" data-id="{{item.id}}" bindtap="shouAnswer">
+          {{item.ques}}
+        </view>
+        </view>
+        
+      </block>
+    </view>
+    <view class="ul-list clearfix">
+      <block wx:for="{{answer}}" wx:key="index">
+        <view class="ul-list-ques">
+          <view class="a-ques">{{item.ques}}</view>
+        </view>
+        <image class="bear mgt30" src="/images/bear/service-bear.png" />
+        <view class="ul-list-answ">
+          <view class="a-answ">{{item.answers}}</view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

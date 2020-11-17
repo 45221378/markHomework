@@ -1,0 +1,12 @@
+<view class="addclass">
+  <view class="addclass-search">
+    <view class="search-input">
+      <image class="search" src="/images/icon/search.png" mode="aspectFit|aspectFill|widthFix" lazy-load="false"></image>
+      <input placeholder="输入班级码" value="{{classCode}}" />
+      <view class='sousuo'>搜索</view>
+    </view>
+  </view>
+  <view class="addclass-main">
+
+  </view>
+</view>
