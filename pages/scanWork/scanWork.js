@@ -163,53 +163,55 @@ Page({
     scanHandleResult(section_id) {
         let url = wx.getStorageSync('requstURL') + 'homework/info';
         let token = wx.getStorageSync('token');
-        let data = {
-            token: token,
-            section_id: section_id
-        };
-        ajax.requestLoad(url, data, 'GET').then(res => {
-            if (res.code === 20000) {
-                if (!res.isBind) {
-                    wx.showModal({
-                        title: "提示",
-                        content: `“${res.section.name}”未入库，请联系管理员`,
-                        icon: 'none',
-                        duration: 2000,
-                        showCancel: false
-                    });
-                } else {
-                    let section_name = res.section_name;
-                    if (res.image_status == 0 && res.tag_status == 0) {
-                        wx.navigateTo({
-                            url: `/pages/uploadHomework/uploadHomework?section_id=${section_id}&section_name=${section_name}`,
-                        })
-                    } else if (res.tag_status == 0) {
-                        wx.navigateTo({
-                            url: `/pages/markWrongList/markWrongList?section_id=${section_id}`,
-                        })
+        if (token && token != '') {
+            let data = {
+                token: token,
+                section_id: section_id
+            };
+            ajax.requestLoad(url, data, 'GET').then(res => {
+                if (res.code === 20000) {
+                    if (!res.isBind) {
+                        wx.showModal({
+                            title: "提示",
+                            content: `“${res.section.name}”未入库，请联系管理员`,
+                            icon: 'none',
+                            duration: 2000,
+                            showCancel: false
+                        });
                     } else {
-                        wx.navigateTo({
-                            url: `/pages/workReport/workReport?section_id=${section_id}&section_time=${res.modified}`,
-                        })
+                        let section_name = res.section_name;
+                        if (res.image_status == 0 && res.tag_status == 0) {
+                            wx.navigateTo({
+                                url: `/pages/uploadHomework/uploadHomework?section_id=${section_id}&section_name=${section_name}`,
+                            })
+                        } else if (res.tag_status == 0) {
+                            wx.navigateTo({
+                                url: `/pages/markWrongList/markWrongList?section_id=${section_id}`,
+                            })
+                        } else {
+                            wx.navigateTo({
+                                url: `/pages/workReport/workReport?section_id=${section_id}&section_time=${res.modified}`,
+                            })
+                        }
                     }
+                } else {
+                    var _this = this;
+                    wx.showToast({
+                        title: res.message,
+                        icon: 'none',
+                        duration: 1500,
+                        complete: function () {
+                            setTimeout(() => {
+                                _this.loginSuccessShow();
+                            }, 1500)
+                        }
+                    })
                 }
-            } else {
-                var _this = this;
-                wx.showToast({
-                    title: res.message,
-                    icon: 'none',
-                    duration: 1500,
-                    complete: function() {
-                        setTimeout(() => {
-                            _this.loginSuccessShow();
-                        }, 1500)
-                    }
-                })
-            }
-        })
+            })
+        }
     },
     // 有两种处理结果，一种是result，一种是path，这两种情况都可以拿到section_id
-    scancode: function() {
+    scancode: function () {
         let that = this;
         const {
             loginFlag
@@ -224,8 +226,8 @@ Page({
                         let result = res.result;
                         if (result) {
                             let section_id = res.result.split(',')[0];
-                            // if (result.indexOf('https://172.17.250.193') > -1) {   //正式验证
-                            if (result.indexOf('http://fdtest.canpoint.net') > -1) { //测试验证
+                            if (result.indexOf('https://172.17.250.193') > -1) { //正式验证
+                                // if (result.indexOf('http://fdtest.canpoint.net') > -1) { //测试验证
                                 let url = wx.getStorageSync('requstURL') + 'user/third/auth';
                                 let token = wx.getStorageSync('token');
                                 let data = {
@@ -248,7 +250,7 @@ Page({
                                 that.scanHandleResult(section_id);
                             } else {
                                 wx.hideTabBar({
-                                    success: function() {
+                                    success: function () {
                                         wx.hideLoading();
                                         that.setData({
                                             errorCode: true,
@@ -257,6 +259,15 @@ Page({
                                 })
                             }
                         }
+                    }else{
+                        wx.hideTabBar({
+                            success: function () {
+                                wx.hideLoading();
+                                that.setData({
+                                    errorCode: true,
+                                })
+                            }
+                        })
                     }
                 },
                 fail: (res) => {
@@ -377,17 +388,16 @@ Page({
         })
         wx.showTabBar({})
     },
-    getFocus: function() {
+    getFocus: function () {
         this.setData({
             psdFocus: true
         });
     },
-    inputPwd: function(e) {
+    inputPwd: function (e) {
         this.setData({
             pwdVal: e.detail.value
         });
     },
-
     gologin() {
         wx.reLaunch({
             url: '/pages/login/login',
@@ -423,8 +433,8 @@ Page({
         var results = regex.exec(url);
         return results == null ? null : results[1];
     },
-    onLoad: function(options) {
-        // this.getnotice()
+    onLoad: function (options) {
+        // this.notice()
         // console.log(query)
         // console.log(typeof query.scene)
         let id = '';
@@ -459,6 +469,7 @@ Page({
                         url: '/pages/login/login',
                     })
                 } else {
+                    //没有考虑token过期等的情况
                     this.loginSuccessShow();
                     //各种情况下都可以登录，且url上面自带了section_id,则需要根据情况进行处理 scanHandleResult(section_id);
                     if (id != "") {
@@ -480,7 +491,6 @@ Page({
                 showScan: true,
             })
         }
-
     },
     // getnotice() {
     //   let showTips = wx.getStorageSync('showTips');
@@ -505,7 +515,7 @@ Page({
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function() {
+    onReady: function () {
 
     },
     notice() {
@@ -513,7 +523,7 @@ Page({
         if (showTips == 0) {
             wx.showModal({
                 title: '公告',
-                content: '小助手将于2020年9月9日早上08:30至10:00进行系统升级(具体恢复时间以实际时间为准)，在此期间系统功能将无法使用，如此给您带来的不便，敬请谅解！',
+                content: '小助手将于2020年11月26日11:00至15:00进行系统升级(具体恢复时间以实际时间为准)，在此期间系统功能将无法使用，如此给您带来的不便，敬请谅解！',
                 showCancel: false,
                 success(res) {
                     if (res.confirm) {
@@ -526,10 +536,10 @@ Page({
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function() {
+    onShow: function () {
         let token = wx.getStorageSync('token');
-        console.log(token=='')
-        if(token==''){
+        console.log(token == '')
+        if (token == '') {
             this.setData({
                 loginFlag: false,
                 showScan: true,
@@ -557,29 +567,34 @@ Page({
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide: function() {
+    onHide: function () {
 
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload: function() {
+    onUnload: function () {
 
     },
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
-    onPullDownRefresh: function() {
+    onPullDownRefresh: function () {
         this.loginSuccessShow();
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom: function() {
-        const { hasMoreData, industryOneId, industryTwoId, currentPage } = this.data;
+    onReachBottom: function () {
+        const {
+            hasMoreData,
+            industryOneId,
+            industryTwoId,
+            currentPage
+        } = this.data;
         if (!hasMoreData) {
             return;
         } else {
@@ -600,7 +615,7 @@ Page({
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function() {
+    onShareAppMessage: function () {
 
     }
 })

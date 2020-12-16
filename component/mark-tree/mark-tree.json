@@ -2,6 +2,5 @@
     "component": true,
     "usingComponents": {
         "markTree": "/component/mark-tree/mark-tree"
-    },
-    "navigationBarTitleText": "标错题"
+    }
 }

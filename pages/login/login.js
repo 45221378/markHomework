@@ -9,13 +9,17 @@ Page({
     checked: true
   },
   checkboxChange(e) {
-    const { checked } = e.currentTarget.dataset;
+    const {
+      checked
+    } = e.currentTarget.dataset;
     this.setData({
       checked: !checked
     })
   },
   wxLogin() {
-    const { checked } = this.data;
+    const {
+      checked
+    } = this.data;
     if (checked) {
       // console.log(checked)
     } else {
@@ -25,7 +29,7 @@ Page({
         duration: 1000
       })
     }
-  }, 
+  },
 
   getPhoneNumber(e) {
     wx.showLoading({
@@ -37,31 +41,38 @@ Page({
       // console.log('点击拒绝');
     } else {
       wx.hideLoading();
-      let url = wx.getStorageSync('requstURL') + 'user/auth';
-      let resCode = wx.getStorageSync('resCode');
-      let startTime = new Date().getTime();
-      let data = {
-        method: 2,
-        code: resCode,
-        encryptedData: e.detail.encryptedData,
-        iv: e.detail.iv,
-      }
-      ajax.requestLoad(url, data, 'POST').then(res => {
-        if (res.code === 20000) {
-          wx.setStorageSync('token', res.token)
-          wx.setStorageSync('startTime', startTime)
-          wx.setStorageSync('first_login', res.first_login)
-          wx.setStorageSync('monitor_moudle', res.monitor_moudle)
-          wx.setStorageSync('userPhone', res.mobile)
-          wx.setStorageSync('formType', 0)
-          if (res.monitor_moudle == 1) {
-            wx.setStorageSync('monitor_moudlePass', 0);
-            wx.navigateTo({
-              url: '/pages/resetPsd/resetPsd',
-            })
-          } else {
-            wx.switchTab({
-              url: '/pages/scanWork/scanWork',
+      wx.login({
+        success: res => {
+          // console.log(res)
+          // 发送 res.code 到后台换取 openId, sessionKey, unionId
+          if (res.code) {
+            let url = wx.getStorageSync('requstURL') + 'user/auth';
+            let startTime = new Date().getTime();
+            let data = {
+              method: 2,
+              code: res.code,
+              encryptedData: e.detail.encryptedData,
+              iv: e.detail.iv,
+            }
+            ajax.requestLoad(url, data, 'POST').then(res => {
+              if (res.code === 20000) {
+                wx.setStorageSync('token', res.token)
+                wx.setStorageSync('startTime', startTime)
+                wx.setStorageSync('first_login', res.first_login)
+                wx.setStorageSync('monitor_moudle', res.monitor_moudle)
+                wx.setStorageSync('userPhone', res.mobile)
+                wx.setStorageSync('formType', 0)
+                if (res.monitor_moudle == 1) {
+                  wx.setStorageSync('monitor_moudlePass', 0);
+                  wx.navigateTo({
+                    url: '/pages/resetPsd/resetPsd',
+                  })
+                } else {
+                  wx.switchTab({
+                    url: '/pages/scanWork/scanWork',
+                  })
+                }
+              }
             })
           }
         }
@@ -70,7 +81,9 @@ Page({
   },
 
   phoneReg() {
-    const { checked } = this.data;
+    const {
+      checked
+    } = this.data;
     if (checked) {
       wx.navigateTo({
         url: '/pages/phoneReg/phoneReg',
@@ -119,15 +132,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    wx.login({
-      success: res => {
-        // console.log(res)
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        if (res.code) {
-          wx.setStorageSync('resCode', res.code)
-        }
-      }
-    })
+
   },
 
   /**
