@@ -21,7 +21,7 @@ Page({
         timer: null,
         bannerList: [{
                 index: 1,
-                url: 'http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/shucheng.jpg',
+                url: 'http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/sc.png',
             },
             {
                 index: 2,

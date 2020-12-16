@@ -38,6 +38,7 @@
         "navigationBarTextStyle": "black"
     },
     "usingComponents": {
+        "advance": "component/advance/advance",
         "parser": "component/parser/parser",
         "parser-group": "component/parser-group/parser-group",
         "image-cropper": "component/image-cropper/image-cropper"

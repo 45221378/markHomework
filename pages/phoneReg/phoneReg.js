@@ -103,12 +103,10 @@ Page({
       return;
     }else{
       let url = wx.getStorageSync('requstURL') + 'user/auth';
-      // let resCode = wx.getStorageSync('resCode');
       let startTime = new Date().getTime();
       let data ={
         mobile : userPhone,
         sms_code :userCode ,
-        // code :resCode
       }
       ajax.requestLoad(url,data,'POST').then(res=>{
         if(res.code===20000){

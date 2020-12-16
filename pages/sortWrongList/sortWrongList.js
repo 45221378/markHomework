@@ -263,13 +263,6 @@ Page({
             url: '/pages/scanWork/scanWork',
         })
     },
-
-    remark() {
-        const { section_id } = this.data;
-        wx.navigateTo({
-            url: `/pages/markWrongList/markWrongList?section_id=${section_id}`,
-        })
-    },
     changeChecked(e) {
         const { checkedid } = e.currentTarget.dataset;
         this.setData({

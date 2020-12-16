@@ -8,7 +8,7 @@ let requestLoad = function (url, data, method) {
     wx.showLoading({
       title: loading,
       mask: true,
-    })
+    }) 
     wx.request({
       url: url,
       data: data,

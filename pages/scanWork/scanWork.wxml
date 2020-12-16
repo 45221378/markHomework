@@ -134,14 +134,3 @@
     </view>
   </view>
 </view>
-<!-- <view class="hint" wx:if="{{errorCode}}">
-  <view class="hint-name hint-error">
-    <view class="hint-errorCode">
-      <view class="tips tips-left">抱歉，暂不支持此二维码。</view>
-      <view class="tips tips-left">本程序支持扫描的二维码有：《智能诊断练测考》二维码，《温故知新寒暑假》小程序扫码二维码，初中《全品学练考》自我综合评价二维码，小学《全品学练考》扫码解错题二维码，全品同学辅导扫码登录二维码~</view>
-    </view>
-    <view class="bottom-btn clearfix">
-      <view class="yes" bindtap="closeError">确定</view>
-    </view>
-  </view>
-</view> -->
