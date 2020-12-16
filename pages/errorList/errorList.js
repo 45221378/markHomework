@@ -126,8 +126,8 @@ Page({
           if (res.result) {
             let result = res.result;
             let section_id = res.result.split(',')[0];
-            // if (result.indexOf('https://172.17.250.193') > -1) {   //正式验证
-            if (result.indexOf('http://fdtest.canpoint.net') > -1) { //测试验证
+            if (result.indexOf('https://172.17.250.193') > -1) {   //正式验证
+            // if (result.indexOf('http://fdtest.canpoint.net') > -1) { //测试验证
               let url = wx.getStorageSync('requstURL') + 'user/third/auth';
               let token = wx.getStorageSync('token');
               let data = {
@@ -157,13 +157,10 @@ Page({
                   })
                 }
               })
-
             }
           }
-
         },
         fail: (res) => {
-          
         }
       })
     } else {

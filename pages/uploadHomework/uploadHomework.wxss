@@ -53,18 +53,30 @@
   margin-bottom: 20rpx;
   display: block;
 }
-
-.uploadHomework .uploadHomework-content .add-img .add-btn {
-  height: 50rpx;
+.uploadHomework .uploadHomework-content .add-img .add-padd{
+  /* padding: 20rpx; */
+  margin-left: 20rpx;
+}
+/* .uploadHomework .uploadHomework-content .add-img .add-btn { */
+  
+  /* height: 50rpx;
   width: 50rpx;
   border-radius: 50%;
   background-color: #2896fe;
   color: #fff;
   line-height: 48rpx;
   text-align: center;
-  font-size: 34rpx;
-  margin-left: 20rpx;
+  font-size: 34rpx; */
+/* } */
 
+.uploadHomework .uploadHomework-content .add-img .add-btn {
+  width:96rpx;
+  height: 96rpx;
+  background-color: #eee;
+  font-size: 58rpx;
+  color: #999;
+  text-align: center;
+  line-height: 84rpx;
 }
 
 .uploadHomework .uploadHomework-content .add-img .picall {

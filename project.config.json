@@ -31,9 +31,11 @@
     "useIsolateContext": true,
     "useCompilerModule": false,
     "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "minifyWXSS": true
+    "minifyWXSS": true,
+    "bundle": false
   },
   "compileType": "miniprogram",
   "libVersion": "2.10.4",
@@ -100,16 +102,15 @@
           "scene": null
         },
         {
-          "id": -1,
-          "name": "pages/mine/service",
-          "pathName": "pages/mine/service",
-          "query": "",
+          "name": "pages/workReport/workReport",
+          "pathName": "pages/workReport/workReport",
+          "query": "section_id=xofmfZ1Q",
           "scene": null
         },
         {
-          "name": "pages/scanWork/scanWork",
-          "pathName": "pages/scanWork/scanWork",
-          "query": "scene=GUQW36rT",
+          "name": "pages/markWrongList/markWrongList",
+          "pathName": "pages/markWrongList/markWrongList",
+          "query": "section_id=xofmfZ1Q",
           "scene": null
         }
       ]

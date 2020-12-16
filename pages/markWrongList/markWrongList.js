@@ -9,216 +9,60 @@ Page({
         section_name: '',
         question_count: 0,
         page: [],
-        testTitle: '',
-        imgList: {
-            14: '/images/subject/Chinese.png',
-            15: '/images/subject/match.png',
-            16: '/images/subject/physics.png',
-            17: '/images/subject/English.png',
-            18: '/images/subject/chemistry.png',
-            19: '/images/subject/biology.png',
-            20: '/images/subject/moralityandlaw.png',
-            21: '/images/subject/history.png',
-            22: '/images/subject/geography.png'
-        },
         btnTips: '提交',
         roman: ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ', 'Ⅷ', 'Ⅸ', 'Ⅹ'],
-        section_time: '',
+        sendPageArray: [],
+        sendQid: ""
     },
-    // 无小题---单选题，判断题, 主观题
-    onechecked(e) {
-        console.log(e.currentTarget.dataset)
-        const { it, indexarr } = e.currentTarget.dataset;
+    receivePage(e) {
+        // console.log(e.detail.page);
+        // console.log(e.detail.clickQid);
         const { page } = this.data;
-        console.log(page)
-        page.forEach((pageItem, pageindex) => {
-            pageItem.content.forEach((conItem, conindex) => {
-                conItem.content.forEach((items, i) => {
-                    if (items.content) {
-                        items.content.forEach((ii, iit) => {
-                            if (ii.index === indexarr) {
-                                this.setData({
-                                    [`page[${pageindex}]content[${conindex}]content[${i}]content[${iit}].checked`]: it
-                                })
-                            }
-                        })
-                    } else {
-                        if (items.index === indexarr) {
-                            this.setData({
-                                [`page[${pageindex}]content[${conindex}]content[${i}].checked`]: it
-                            })
-                        }
-                    }
-                })
-            })
+        let newPage = this.deepHandlerPage(page, e.detail.page, e.detail.clickQid);
+        this.setData({
+            page: newPage
         })
     },
-    // 无小题---多选题
-    doublechecked(e) {
-        const { it, indexarr } = e.currentTarget.dataset;
-        const { page } = this.data;
-        page.forEach((pageItem, pageindex) => {
-            pageItem.content.forEach((conItem, conindex) => {
-                conItem.content.forEach((items, i) => {
-                    if (items.content) {
-                        items.content.forEach((ii, iit) => {
-                            if (ii.index === indexarr) {
-                                let dataRowArray = ii.checked;
-                                if (dataRowArray === "" || dataRowArray.indexOf(it) == -1) {
-                                    dataRowArray = ii.checked += it;
-                                    dataRowArray = dataRowArray.split("").sort();
-                                    dataRowArray = Array.from(new Set(dataRowArray)).join("");
-                                } else {
-                                    dataRowArray = dataRowArray.split(it).join("");
-                                }
-                                this.setData({
-                                    [`page[${pageindex}]content[${conindex}]content[${i}]content[${iit}].checked`]: dataRowArray,
-                                })
-                            }
-                        })
-                    } else {
-                        if (items.index === indexarr) {
-                            let dataRowArray = items.checked;
-                            if (dataRowArray === "" || dataRowArray.indexOf(it) == -1) {
-                                dataRowArray = items.checked += it;
-                                dataRowArray = dataRowArray.split("").sort();
-                                dataRowArray = Array.from(new Set(dataRowArray)).join("");
-                            } else {
-                                dataRowArray = dataRowArray.split(it).join("");
-                            }
-                            this.setData({
-                                [`page[${pageindex}]content[${conindex}]content[${i}].checked`]: dataRowArray,
-                            })
-                        }
-                    }
-                })
-            })
+    //递归处理模板数据,自己调用自己，必须return
+    deepHandlerPage(handlepage, sendPageArray, sendQid) {
+        let changeHandlepage = handlepage;
+        changeHandlepage.forEach((item, index) => {
+            if (item.content) {
+                this.deepHandlerPage(item.content, sendPageArray, sendQid)
+            } else {
+                if (item.qid == sendQid) {
+                    changeHandlepage[index] = sendPageArray
+                }
+            }
         })
+        return changeHandlepage
     },
-    // 有小题---单选题，判断题,主观题
-    onechildchecked(e) {
-        const { it, indexarr, indexarrii } = e.currentTarget.dataset;
-        const { page } = this.data;
-        page.forEach((pageItem, pageindex) => {
-            pageItem.content.forEach((conItem, conindex) => {
-                conItem.content.forEach((items, i) => {
-                    if (items.content) {
-                        items.content.forEach((ii, iit) => {
-                            if (ii.index === indexarr) {
-                                ii.children.map((item, j) => {
-                                    if (j === indexarrii) {
-                                        this.setData({
-                                            [`page[${pageindex}]content[${conindex}]content[${i}]content[${iit}]children[${j}].checked`]: it
-                                        })
-                                    }
-                                })
-                            }
-                        })
-                    } else {
-                        if (items.index === indexarr) {
-                            items.children.map((item, j) => {
-                                if (j === indexarrii) {
-                                    this.setData({
-                                        [`page[${pageindex}]content[${conindex}]content[${i}]children[${j}].checked`]: it
-                                    })
-                                }
-                            })
-                        }
-                    }
-                })
-            })
-        })
-    },
-    // 有小题---多选题
-    doublechildchecked(e) {
-        const { it, indexarr, indexarrii } = e.currentTarget.dataset;
-        const { page } = this.data;
-        page.forEach((pageItem, pageindex) => {
-            pageItem.content.forEach((conItem, conindex) => {
-                conItem.content.forEach((items, i) => {
-                    if (items.content) {
-                        items.content.forEach((ii, iit) => {
-                            if (ii.index === indexarr) {
-                                ii.children.map((item, j) => {
-                                    if (j === indexarrii) {
-                                        let dataRowArray = ii.checked;
-                                        if (dataRowArray === "" || dataRowArray.indexOf(it) == -1) {
-                                            dataRowArray = ii.checked += it;
-                                            dataRowArray = dataRowArray.split("").sort();
-                                            dataRowArray = Array.from(new Set(dataRowArray)).join("");
-                                        } else {
-                                            dataRowArray = dataRowArray.split(it).join("");
-                                        }
-                                        this.setData({
-                                            [`page[${pageindex}]content[${conindex}]content[${i}]content[${iit}]children[${j}].checked`]: dataRowArray,
-                                        })
-                                    }
-                                })
-                            }
-                        })
-                    } else {
-                        if (items.index === indexarr) {
-                            items.children.map((item, j) => {
-                                if (j === indexarrii) {
-                                    let dataRowArray = item.checked;
-                                    if (dataRowArray === "" || dataRowArray.indexOf(it) == -1) {
-                                        dataRowArray = item.checked += it;
-                                        dataRowArray = dataRowArray.split("").sort();
-                                        dataRowArray = Array.from(new Set(dataRowArray)).join("");
-                                    } else {
-                                        dataRowArray = dataRowArray.split(it).join("");
-                                    }
-                                    this.setData({
-                                        [`page[${pageindex}]content[${conindex}]content[${i}]children[${j}].checked`]: dataRowArray,
-                                    })
-                                }
-                            })
-                        }
-                    }
-
-                })
-            })
-        })
-    },
-    subTip() {
-        const { page, section_id, section_time } = this.data;
-        var sendContentOne = [];
-        var sendContentTWO = [];
-        var sendContent = [];
-        var sendIntData = [];
-        // 定义选择题的判断题的temlate字段
+    //提交以前，先把多维数组转化为一维数组，然后再把 把判断题用户选择的T F，转化成0 ，1发送给后端
+    changeSubArr(data) {
+        let result = [];
+        // 定义选择题的判断题的template字段
         var templateChoose = [1, 2, 3, 4, 6, 25, 14, 22, 29, 19];
-        console.log(page)
-
-        page.forEach((pageItem, pageindex) => {
-            pageItem.content.forEach((conItem, conindex) => {
-                conItem.content.forEach((item) => {
-                    // console.log(item)
-                    if (item.content) {
-                        item.content.forEach((ii, iit) => {
-                            //把判断题用户选择的T F，转化成0 ，1发送给后端，新版本提交的部分
-                            ii.checked = ii.checked == '错' ? 0 : ii.checked == '对' ? 1 : ii.checked
-                            ii.children.map(it => {
-                                it.checked = it.checked == '错' ? 0 : it.checked == '对' ? 1 : it.checked
-                            })
-                            sendContentTWO.push(ii)
-                        })
-                    } else {
-                        //把判断题用户选择的T F，转化成0 ，1发送给后端，新版本提交的部分
-                        item.checked = item.checked == '错' ? 0 : item.checked == '对' ? 1 : item.checked
+        const loop = data => {
+            data.forEach((item, indexs) => {
+                if (item.content) {
+                    loop(item.content)
+                } else {
+                    //把判断题用户选择的T F，转化成0 ，1发送给后端，新版本提交的部分
+                    item.checked = item.checked == '错' ? 0 : item.checked == '对' ? 1 : item.checked
+                    if (item.children.length > 0) {
                         item.children.map(it => {
                             it.checked = it.checked == '错' ? 0 : it.checked == '对' ? 1 : it.checked
                         })
-                        sendContentOne.push(item)
                     }
-                })
+                    result.push(item)
+                }
+
             })
-        })
-        sendContent = sendContentOne.concat(sendContentTWO)
-        let contentArray = Array.prototype.concat.apply([], sendContent);
-        console.log(contentArray)
-        contentArray.forEach((item, indexs) => {
-            // console.log(item)
+        }
+        loop(data)
+        var sendIntData = [];
+        result.forEach((item, indexs) => {
+            console.log(item)
             if (item.children.length > 0) {
                 sendIntData.push({
                     children: [],
@@ -276,9 +120,19 @@ Page({
                 }
             }
         })
-        console.log(sendIntData)
+        return sendIntData;
+    },
+    subTip() {
+        const {
+            page,
+            section_id,
+        } = this.data;
+        let nowTimeDot = new Date();
+        let section_time = `${nowTimeDot.getFullYear()}年${nowTimeDot.getMonth() + 1}月${nowTimeDot.getDate()}日`;
         let url = wx.getStorageSync('requstURL') + 'homework/update';
         let token = wx.getStorageSync('token');
+        let sendIntData = this.changeSubArr(page)
+            // console.log(sendIntData)
         let data = {
             token: token,
             section_id: section_id,
@@ -434,7 +288,9 @@ Page({
         return pageData
     },
     onLoad: function(options) {
-        const { section_id } = options;
+        const {
+            section_id
+        } = options;
         let url = wx.getStorageSync('requstURL') + 'homework/info';
         let token = wx.getStorageSync('token');
         let data = {
@@ -473,19 +329,17 @@ Page({
                         })
                     })
                 })
-                let nowTimeDot = new Date();
-                let section_time = `${nowTimeDot.getFullYear()}年${nowTimeDot.getMonth() + 1}月${nowTimeDot.getDate()}日`;
+
+                console.log(page)
+
                 this.setData({
                     section_name: res.section_name,
                     page: page,
                     section_id: section_id,
-                    question_count: res.question_count,
-                    section_time
+                    question_count: res.question_count
                 })
             }
         })
-
-
     },
 
     /**

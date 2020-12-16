@@ -17,8 +17,6 @@
     <view wx:if="{{!noData}}" class="haveData">
       <view class="title">
         <text class="section-name">{{section_name}}</text>
-        <!-- <text class="num">{{wrong_question_count}}/{{question_count}}</text> -->
-        <!-- <button class="remark button " bindtap="remark">重新标记错题</button> -->
       </view>
       <view class="content">
         <view class="index clearfix">

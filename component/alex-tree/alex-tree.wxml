@@ -1,17 +1,17 @@
-<block wx:for="{{treeBody}}" wx:key="index">
+<block wx:for="{{treeBody}}" wx:key="index"> 
   <view class="content" wx:if="{{item.content}}">
     <view class="ques-num" wx:if="{{item.name&&item.name!=''}}">{{item.name}}</view>
     <view class="clearfix posi">
-      <alexTree tree-body="{{item.content}}" />
+      <alexTree tree-body="{{item.content}}" checkedid='{{checkedid}}' bind:tapitem='receiveNum'/>
     </view>
   </view>
-  <view wx:if="{{!item.content}}" data-list="{{item.question_data}}" data-checkednum="{{item.question_data.index}}" data-checkedid="{{item.qid}}" catchtap="tapItem" class="i {{checkednum==item.question_data.index?'checked':''}} {{item.question_data.right==0?'wrong':item.question_data.right==1?'right':'double'}} ">
+  <view wx:if="{{!item.content}}" data-list="{{item.question_data}}" data-checkednum="{{item.question_data.index}}" data-checkedid="{{item.qid}}" catchtap="tapItem" class="i {{checkedid==item.question_data.qid?'checked':''}} {{item.question_data.right==2?'double':item.question_data.right==0?'wrong':'right'}} ">
     {{item.question_data.index}}
   </view>
 </block>
 
-
-<view class="parser-content" wx:if="{{false}}" catchtap="stopcloseQues">
+<!-- 通过题目的index去判断显示隐藏，此时可能会出现一个问题就是，题号如果一样，怎么办 -->
+<view class="parser-content" wx:if="{{checkedid==pageData.qid}}" catchtap="stopcloseQues">
   <parser-group>
     <view>
       <!-- 无小题的情况下 -->
