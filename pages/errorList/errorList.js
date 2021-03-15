@@ -52,9 +52,12 @@ Page({
     ],
     x: 260,
     y: 460,
+    psdSeer: false,
+    psdFocusSeer: true,
+    pwdValSeer: '',
   },
   gologin() {
-    wx.navigateTo({
+    wx.reLaunch({
       url: `/pages/login/login`,
     })
   },
@@ -115,6 +118,69 @@ Page({
     return results == null ? null : results[1];
   },
   scancode: function () {
+    let monitor_moudle = wx.getStorageSync('monitor_moudle');
+    const {
+      loginFlag
+    } = this.data;
+    if (loginFlag) {
+      if (monitor_moudle == 1) {
+        //每次扫一扫的时候，都需要输入监管密码
+        wx.hideTabBar({});
+        this.setData({
+          psdSeer: true,
+        })
+      } else {
+        this.scanCodeSDK();
+      }
+    } else {
+      this.setData({
+        bounceInUp: "arotate",
+      })
+      setTimeout(() => {
+        this.setData({
+          bounceInUp: "",
+        })
+      }, 600);
+    }
+  },
+  // 输入监管密码成功后，才能正式进入扫一扫
+  surepsdSeer() {
+    let {
+      pwdValSeer
+    } = this.data;
+
+    if (pwdValSeer.length === 4) {
+      let url = wx.getStorageSync('requstURL') + 'user/monitor/password/check';
+      let token = wx.getStorageSync('token');
+      let data = {
+        token: token,
+        monitor_password: pwdValSeer
+      }
+      ajax.requestLoad(url, data, 'POST').then(res => {
+        if (res.code === 20000) {
+          wx.showTabBar({});
+          this.setData({
+            psdSeer: false,
+            pwdValSeer: ''
+          })
+          this.scanCodeSDK();
+        } else {
+          wx.showToast({
+            title: '监管密码输入错误，请重新输入',
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      })
+    } else {
+      wx.showToast({
+        title: '请输入4位数字监管密码',
+        icon: 'none',
+        duration: 1000
+      })
+    }
+  },
+  scanCodeSDK() {
     let that = this;
     const {
       loginFlag
@@ -126,8 +192,8 @@ Page({
           if (res.result) {
             let result = res.result;
             let section_id = res.result.split(',')[0];
-            if (result.indexOf('https://172.17.250.193') > -1) {   //正式验证
-            // if (result.indexOf('http://fdtest.canpoint.net') > -1) { //测试验证
+            if (result.indexOf('https://172.17.250.193') > -1) { //正式验证
+              // if (result.indexOf('http://fdtest.canpoint.net') > -1) { //测试验证
               let url = wx.getStorageSync('requstURL') + 'user/third/auth';
               let token = wx.getStorageSync('token');
               let data = {
@@ -143,8 +209,8 @@ Page({
             } else if (result.indexOf('https://zyzs.canpoint.net/section/qrcode') > -1) {
               let path = res.result.split('?')[1].split('=')[1];
               let section_id_split = decodeURIComponent(path).split(',')[0];
-              console.log(path)
-              console.log(section_id_split)
+              // console.log(path)
+              // console.log(section_id_split)
               that.scanHandleResult(section_id_split);
             } else if (section_id.length == 8) {
               that.scanHandleResult(section_id);
@@ -160,8 +226,7 @@ Page({
             }
           }
         },
-        fail: (res) => {
-        }
+        fail: (res) => {}
       })
     } else {
       this.setData({
@@ -218,11 +283,33 @@ Page({
     }
 
   },
+  backoutSeer() {
+    this.setData({
+      psdSeer: false,
+      pwdValSeer: ''
+    })
+    wx.showTabBar({})
+  },
+  getFocusSeer: function () {
+    this.setData({
+      psdFocusSeer: true
+    });
+  },
+  inputPwdSeer: function (e) {
+    this.setData({
+      pwdValSeer: e.detail.value
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let token = wx.getStorageSync('token');
+    if (token && token != '') {
+      this.setData({
+        loginFlag: true
+      })
+    }
   },
 
   /**

@@ -21,11 +21,6 @@ let requestLoad = function(url, data, method) {
                     if (code === 20000) {
                         resolve(res.data)
                     } else if (code === 300201 || code === 300202 || code === 300203 || code === 300301 || code === 300401 || code === 400201 || code === 400202 || code === 400203 || code === 400204) {
-                        wx.showToast({
-                            title: res.data.message,
-                            icon: 'none',
-                            duration: 2000
-                        })
                         wx.removeStorageSync('token');
                         wx.removeStorageSync('userPhone');
                         wx.removeStorageSync('startTime');
@@ -33,6 +28,7 @@ let requestLoad = function(url, data, method) {
                         wx.removeStorageSync('userPhone');
                         wx.removeStorageSync('monitor_moudle');
                         wx.removeStorageSync('first_login');
+                        wx.removeStorageSync('showAdvert');
                         wx.reLaunch({
                             url: '/pages/scanWork/scanWork',
                         })

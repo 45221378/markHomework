@@ -322,7 +322,7 @@ Page({
           pageData: question_data,
           source_images_list: res.data.source_images_list
         })
-        console.log(this.data.pageData);
+        // console.log(this.data.pageData);
       }
     })
   },
@@ -339,7 +339,7 @@ Page({
     this.setData({
       pageChecked: sendId
     })
-    console.log(sendId)
+    // console.log(sendId)
     //左右滑动的情况下，请求新的题目数据
     this.getData(sendId)
     // //左右滑动的情况下，把正在播放的音频状态全部重置
@@ -363,7 +363,7 @@ Page({
       idList: idList,
       pageChecked: id
     })
-    console.log(idList)
+    // console.log(idList)
     idList.forEach((item, index) => {
       if (item == id) {
         this.setData({
@@ -371,7 +371,7 @@ Page({
         })
       }
     })
-    console.log(this.data.nowid)
+    // console.log(this.data.nowid)
     // if (this.data.nowid == 0) {
     // this.getData(id)
     // }
@@ -388,7 +388,7 @@ Page({
     const { audiosrc, qid } = e.currentTarget.dataset;
     const { pageData } = this.data;
     innerAudioContext.src = audiosrc;
-    console.log(audiosrc)
+    // console.log(audiosrc)
     innerAudioContext.play();
     var that = this
     if (pageData.children.length > 0) {

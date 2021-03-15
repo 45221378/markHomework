@@ -60,7 +60,7 @@ Page({
         })
       },
       fail: function(res) {
-        console.log(res);
+        // console.log(res);
         wx.hideLoading();
         wx.showToast({
           title: '下载文件失败',

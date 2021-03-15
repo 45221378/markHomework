@@ -80,6 +80,8 @@ Component({
         success: function (res) {
           const r = Number(_this.data.r); //圆形半径
           let rpx = (res.windowWidth / 750) * r;
+          // console.log(res.windowWidth / 750)
+          // console.log(rpx)
           _this.setData({
             screenWidth: res.windowWidth,
             rpx,

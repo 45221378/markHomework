@@ -65,7 +65,7 @@ Page({
       id: options.id,
       source: options.source
     })
-    console.log(options.value)
+    // console.log(options.value)
     if(options.value!='undefined'){
       this.setData({
         remarks:options.value

@@ -48,7 +48,7 @@ Component({
                     checkedid,
                     pageData
                 })
-                console.log(this.data.pageData)
+                // console.log(this.data.pageData)
                 this.triggerEvent('tapitem', {
                     checkedid: checkedid,
                     // pageData: pageData
@@ -144,7 +144,7 @@ Component({
         lifetimes: {
             // 生命周期函数，可以为函数，或一个在methods段中定义的方法名
             attached: function() {
-                console.log(this.data.treeBody)
+                // console.log(this.data.treeBody)
             },
             detached: function() {
                 // 在组件实例被从页面节点树移除时执行

@@ -235,7 +235,7 @@ Page({
                     pageData: question_data,
                     source_images_list: res.data.source_images_list
                 })
-                console.log(this.data.pageData);
+                // console.log(this.data.pageData);
 
             }
         })
@@ -429,7 +429,7 @@ Page({
         const { audiosrc, qid } = e.currentTarget.dataset;
         const { pageData } = this.data;
         innerAudioContext.src = audiosrc;
-        console.log(audiosrc)
+        // console.log(audiosrc)
         innerAudioContext.play();
         var that = this
         if (pageData.children.length > 0) {

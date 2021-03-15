@@ -18,7 +18,7 @@ Page({
                 // let answerInt = this.data.answer;
                 // answerInt = answerInt.concat(item)
                 // console.log(answerInt)
-                console.log(item)
+                // console.log(item)
                 let answerInt = [];
                 answerInt.push(item)
                 this.setData({

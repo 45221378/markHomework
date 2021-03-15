@@ -8,7 +8,7 @@ Page({
     downNet: "https://fudao.canpoint.net"
   },
   copyText(e) {
-    console.log(e)
+    // console.log(e)
     const { content } = e.currentTarget.dataset;
     wx.setClipboardData({
       data: content,

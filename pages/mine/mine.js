@@ -21,14 +21,18 @@ Page({
         timer: null,
         bannerList: [{
                 index: 1,
-                url: 'http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/shucheng.jpg',
+                url: 'http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/mine-swiper4.png',
             },
             {
                 index: 2,
-                url: 'http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/oneonone2.png',
+                url: 'http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/mine-swiper5.png',
+            },
+            {
+                index: 3,
+                url: 'http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/sc.png',
             }
         ],
-        showIcon:true,
+        showIcon: true,
     },
     loginout() {
         wx.removeStorageSync('token');
@@ -38,6 +42,7 @@ Page({
         wx.removeStorageSync('userPhone');
         wx.removeStorageSync('monitor_moudle');
         wx.removeStorageSync('first_login');
+        wx.removeStorageSync('showAdvert');
         this.setData({
             loginFlag: false,
             formType: null
@@ -81,30 +86,50 @@ Page({
             url: '/pages/mine/service',
         })
     },
-    closeIcon(){
+    closeIcon() {
         this.setData({
             showIcon: false
         })
     },
-    goIcon(){
+    goIcon() {
         wx.navigateTo({
-            url: '/pages/mine/studentHelp?form=icon',
+            url: '/pages/mine/studentHelp?form=mineicon',
         })
     },
     goExplain(e) {
         const { index } = e.currentTarget.dataset;
+        const version = wx.getStorageSync('version');
         if (index == 1) {
+            wx.navigateToMiniProgram({
+                appId: 'wxcb6f001afb79e3c5',
+                path: 'pages/data_datum/data_datum',
+                extraData: {
+                    promoter_id: "e52b74e0-45d2-11eb-b9de-1d7322258e88"
+                },
+                envVersion: `${version==0?'trial':'release'}`,
+                success(res) {
+                    // 打开成功
+                }
+            })
+        } else if (index == 2) {
+            wx.navigateToMiniProgram({
+                appId: 'wxcb6f001afb79e3c5',
+                path: 'pages/index/index',
+                extraData: {
+                    promoter_id: "1b9786e0-614e-11eb-b618-6b7752b7a4a9"
+                },
+                envVersion: `${version==0?'trial':'release'}`,
+                success(res) {
+                    // 打开成功
+                }
+            })
+        } else if (index == 3) {
             wx.navigateToMiniProgram({
                 appId: 'wxa434b2c20ea3ddeb',
                 path: '',
                 success(res) {
                     // 打开成功
                 }
-            })
-        }
-        if (index == 2) {
-            wx.navigateTo({
-                url: `/pages/mine/studentHelp?form=mine`,
             })
         }
     },

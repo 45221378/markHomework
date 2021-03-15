@@ -172,7 +172,7 @@ Page({
           contentlist
         })
         wx.setStorageSync('idList', idList);
-        console.log(this.data.contentlist)
+        // console.log(this.data.contentlist)
       }
     })
   },
@@ -357,8 +357,8 @@ Page({
   },
   playbigaudio(e) {
     const { audiosrc, id } = e.currentTarget.dataset;
-    console.log(id)
-    console.log(audiosrc)
+    // console.log(id)
+    // console.log(audiosrc)
 
     const { contentlist } = this.data;
     innerAudioContext.src = audiosrc;

@@ -21,21 +21,22 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
-    "useMultiFrameRuntime": false,
+    "useMultiFrameRuntime": true,
     "useApiHook": true,
+    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
+    "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": false,
     "userConfirmedUseCompilerModuleSwitch": false,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "minifyWXSS": true,
-    "bundle": false
+    "minifyWXSS": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.10.4",
@@ -102,15 +103,28 @@
           "scene": null
         },
         {
-          "name": "pages/workReport/workReport",
-          "pathName": "pages/workReport/workReport",
-          "query": "section_id=xofmfZ1Q",
+          "id": -1,
+          "name": "pages/mine/service",
+          "pathName": "pages/mine/service",
+          "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/scanWork/scanWork",
+          "pathName": "pages/scanWork/scanWork",
+          "query": "scene=https://zyzs.canpoint.net/section/qrcode/?scene=4SXZgH4z,1,2",
+          "scene": 1012
         },
         {
           "name": "pages/markWrongList/markWrongList",
           "pathName": "pages/markWrongList/markWrongList",
-          "query": "section_id=xofmfZ1Q",
+          "query": "section_id=Te03iUJG",
+          "scene": null
+        },
+        {
+          "name": "pages/scanWork/scanWork",
+          "pathName": "pages/scanWork/scanWork",
+          "query": "q=https%3A%2F%2Fzyzs.canpoint.net%2Fsection%2Fqrcode%2F%3Fscene%3D4SXZgH4z%2C1%2C2&scancode_time=1615514408",
           "scene": null
         }
       ]

@@ -83,7 +83,7 @@ Page({
           record_list,
           addContent: res.cache_wrong_question_count
         })
-        console.log(this.data.record_list)
+        // console.log(this.data.record_list)
       }
     })
   },
@@ -92,7 +92,7 @@ Page({
     const { sectionid, hadletype } = e.currentTarget.dataset;
     const { subjectid, stageid, record_list, addContent } = this.data;
     let token = wx.getStorageSync('token');
-    console.log(hadletype)
+    // console.log(hadletype)
     if (hadletype == 0) {
       if (addContent >= 50) {
         this.setData({

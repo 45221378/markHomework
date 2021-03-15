@@ -1,0 +1,30 @@
+/* pages/markWrongList/playVideo.wxss */
+
+.playVideo .clearfix {
+    padding: 10rpx 20rpx 30rpx 20rpx;
+}
+
+.playVideo .title {
+    font-size: 30rpx;
+    color: #468efa;
+    float: left;
+}
+
+.playVideo .getClass {
+    font-size: 22rpx;
+    color: #fff;
+    background-color: #ff4900;
+    width: 240rpx;
+    height: 46rpx;
+    border-radius: 23rpx;
+    float: right;
+}
+
+.playVideo .center {
+    text-align: center;
+}
+
+.playVideo .center video {
+    border-radius: 10rpx;
+    margin-bottom: 10rpx;
+}

@@ -1,9 +1,9 @@
-<!-- pages/markWrongList/markWrongList.wxml -->
 <wxs src="./../../utils/check.wxs" module="tools" />
 <view class="markWrongList">
   <text class="top">当前作业：{{section_name}}</text>
   <view class="question">
-    <markTree page="{{page}}" bind:tapPage='receivePage'></markTree>
+    <view class="go-videoList" bindtap="seeVideo" wx:if="{{is_video==1}}">本章节易错题讲解</view>
+    <markTree page="{{page}}" sectionid="{{section_id}}" bind:tapPage='receivePage'></markTree>
     <!-- 提交的 my_answer  主观题 正确 1 错误 0 -->
     <!-- stem 有小题 显示 此字段，找childs -->
     <!-- questionType  里面的id 为 1 2 4表示是客观题 -->

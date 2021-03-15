@@ -80,3 +80,26 @@
  .left {
      float: left;
  }
+ /* 广告样式情况 */
+ 
+ .go-videoList {
+     color: #2896fe;
+     font-size: 24rpx;
+     text-align: right;
+     padding: 0 30rpx 10rpx 0;
+ }
+ 
+ .showVideo {
+     display: flex;
+     justify-content: flex-start;
+     align-items: center;
+     color: #ff4900;
+     font-size: 24rpx;
+     padding: 0 0 20rpx 0;
+ }
+ 
+ .showVideo .icon {
+     width: 44rpx;
+     height: 44rpx;
+     padding: 0 20rpx 0 0;
+ }

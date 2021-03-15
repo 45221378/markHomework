@@ -87,7 +87,7 @@ Page({
       download,
       source
     } = options;
-    console.log(options)
+    // console.log(options)
     if (source && source == 2) {
       this.setData({
         section_name: sectionname,

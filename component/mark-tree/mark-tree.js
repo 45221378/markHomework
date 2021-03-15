@@ -5,6 +5,10 @@ Component({
             type: Array,
             value: [],
         },
+        sectionid: {
+            type: String,
+            value: ''
+        }
     },
     methods: {
         //子组件其实也是自己的父组件，所以需要接受这个点击事件，再次进行递归传递
@@ -55,12 +59,11 @@ Component({
                 }
             })
         },
-
         // 有小题---单选题，判断题,主观题
         onechildchecked(e) {
             const { it, qid, indexarrii } = e.currentTarget.dataset;
             const { page } = this.data;
-            console.log(page)
+            // console.log(page)
             page.forEach((items, i) => {
                 if (items.qid === qid) {
                     items.children.map((item, j) => {
@@ -81,7 +84,7 @@ Component({
         doublechildchecked(e) {
             const { it, qid, indexarrii } = e.currentTarget.dataset;
             const { page } = this.data;
-            console.log(page)
+            // console.log(page)
             page.forEach((items, i) => {
                 if (items.qid === qid) {
                     items.children.map((ii, j) => {
@@ -105,6 +108,19 @@ Component({
                     })
                 }
             })
+        },
+        seeVideo(e) {
+            const { vimg, vsrc, vqid } = e.currentTarget.dataset;
+            const { sectionid } = this.data;
+            wx.navigateTo({
+                url: `/pages/markWrongList/playVideo?type=1&section_id=${sectionid}`,
+            })
+            const vOptions = {
+                vimg: vimg,
+                vsrc: vsrc,
+                vqid: vqid
+            }
+            wx.setStorageSync('vOptions', vOptions)
         },
     }
 })

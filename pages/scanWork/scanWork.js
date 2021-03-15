@@ -1,5 +1,6 @@
 // pages/scanWork/scanWork.js
 var ajax = require("./../../utils/ajax.js");
+
 Page({
     /**
      * 页面的初始数据
@@ -71,25 +72,34 @@ Page({
         showTitle: false,
         Length: 4,
         pwdVal: '',
+        pwdValSeer: '',
         psdFocus: true,
+        psdFocusSeer: true,
         isAnimate: false,
-        bannerList: [
-            //   {
-            //   index: 0,
-            //   url: 'http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/mine0.jpg',
-            // },
-            {
+        bannerList: [{
                 index: 1,
-                url: 'http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/shucheng.jpg',
+                url: 'http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/scan-swiper4.png',
             },
             {
                 index: 2,
-                url: 'http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/oneonone1.png',
-            }
+                url: 'http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/scan-swiper5.png',
+            },
+            {
+                index: 3,
+                url: 'http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/sc.png',
+            },
         ],
+        openList: [{
+            index: 2,
+            url: 'http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/openList2.png'
+        }],
         circleFlag: false,
         currentPage: 1,
         hasMoreData: true, //判断是否需要请求下一页的数据
+        advert: false, //轮播图广告
+        timer: null, //计时器函数，后期需要清除
+        timeOutText: 6, //倒计时的秒数
+        psdSeer: false,
     },
     getData(e) {
         let data = e.detail;
@@ -160,7 +170,7 @@ Page({
             }
         })
     },
-    scanHandleResult(section_id) {
+    scanHandleResult(section_id,thirdFrom) {
         let url = wx.getStorageSync('requstURL') + 'homework/info';
         let token = wx.getStorageSync('token');
         if (token && token != '') {
@@ -182,7 +192,7 @@ Page({
                         let section_name = res.section_name;
                         if (res.image_status == 0 && res.tag_status == 0) {
                             wx.navigateTo({
-                                url: `/pages/uploadHomework/uploadHomework?section_id=${section_id}&section_name=${section_name}`,
+                                url: `/pages/uploadHomework/uploadHomework?section_id=${section_id}&section_name=${section_name}&thirdFrom=${thirdFrom}`,
                             })
                         } else if (res.tag_status == 0) {
                             wx.navigateTo({
@@ -196,84 +206,44 @@ Page({
                     }
                 } else {
                     var _this = this;
-                    wx.showToast({
-                        title: res.message,
-                        icon: 'none',
-                        duration: 1500,
-                        complete: function () {
-                            setTimeout(() => {
-                                _this.loginSuccessShow();
-                            }, 1500)
-                        }
-                    })
+                    if (res.code == 300003) {
+                        wx.showToast({
+                            title: res.message,
+                            icon: 'none',
+                            duration: 3000,
+                        })
+                    } else {
+                        wx.showToast({
+                            title: res.message,
+                            icon: 'none',
+                            duration: 2000,
+                            complete: function () {
+                                setTimeout(() => {
+                                    _this.loginSuccessShow();
+                                }, 2000)
+                            }
+                        })
+                    }
                 }
             })
         }
     },
     // 有两种处理结果，一种是result，一种是path，这两种情况都可以拿到section_id
     scancode: function () {
-        let that = this;
+        let monitor_moudle = wx.getStorageSync('monitor_moudle');
         const {
             loginFlag
         } = this.data;
         if (loginFlag) {
-            // 允许从相机和相册扫码
-            wx.scanCode({
-                // scanType:['datamatrix', 'qrCode'],
-                success(res) {
-                    console.log(res);
-                    if (res.result) {
-                        let result = res.result;
-                        if (result) {
-                            let section_id = res.result.split(',')[0];
-                            if (result.indexOf('https://172.17.250.193') > -1) { //正式验证
-                                // if (result.indexOf('http://fdtest.canpoint.net') > -1) { //测试验证
-                                let url = wx.getStorageSync('requstURL') + 'user/third/auth';
-                                let token = wx.getStorageSync('token');
-                                let data = {
-                                    token: token,
-                                    redirect_url: result
-                                };
-                                ajax.requestLoad(url, data, 'POST').then(res => {
-                                    const {
-                                        code
-                                    } = res;
-                                    if (code == 20000) {}
-                                })
-                            } else if (result.indexOf('https://zyzs.canpoint.net/section/qrcode') > -1) {
-                                let path = res.result.split('?')[1].split('=')[1];
-                                let section_id_split = decodeURIComponent(path).split(',')[0];
-                                console.log(path)
-                                console.log(section_id_split)
-                                that.scanHandleResult(section_id_split);
-                            } else if (section_id.length == 8) {
-                                that.scanHandleResult(section_id);
-                            } else {
-                                wx.hideTabBar({
-                                    success: function () {
-                                        wx.hideLoading();
-                                        that.setData({
-                                            errorCode: true,
-                                        })
-                                    }
-                                })
-                            }
-                        }
-                    }else{
-                        wx.hideTabBar({
-                            success: function () {
-                                wx.hideLoading();
-                                that.setData({
-                                    errorCode: true,
-                                })
-                            }
-                        })
-                    }
-                },
-                fail: (res) => {
-
-                }
-            })
+            if (monitor_moudle == 1) {
+                //每次扫一扫的时候，都需要输入监管密码
+                wx.hideTabBar({});
+                this.setData({
+                    psdSeer: true,
+                })
+            } else {
+                this.scanCodeSDK();
+            }
         } else {
             this.setData({
                 bounceInUp: "arotate",
@@ -284,6 +254,102 @@ Page({
                 })
             }, 600);
         }
+    },
+    // 输入监管密码成功后，才能正式进入扫一扫
+    surepsdSeer() {
+        let {
+            pwdValSeer
+        } = this.data;
+
+        if (pwdValSeer.length === 4) {
+            let url = wx.getStorageSync('requstURL') + 'user/monitor/password/check';
+            let token = wx.getStorageSync('token');
+            let data = {
+                token: token,
+                monitor_password: pwdValSeer
+            }
+            ajax.requestLoad(url, data, 'POST').then(res => {
+                if (res.code === 20000) {
+                    wx.showTabBar({});
+                    this.setData({
+                        psdSeer: false,
+                        pwdValSeer: ''
+                    })
+                    this.scanCodeSDK();
+                } else {
+                    wx.showToast({
+                        title: '监管密码输入错误，请重新输入',
+                        icon: 'none',
+                        duration: 1000
+                    })
+                }
+            })
+        } else {
+            wx.showToast({
+                title: '请输入4位数字监管密码',
+                icon: 'none',
+                duration: 1000
+            })
+        }
+    },
+    //调取微信摄像头的扫一扫 SDK
+    scanCodeSDK() {
+        var that = this;
+        // 允许从相机和相册扫码
+        wx.scanCode({
+            // scanType:['datamatrix', 'qrCode'],
+            success(res) {
+                console.log(res);
+                if (res.result) {
+                    let result = res.result;
+                    if (result) {
+                        let section_id = res.result.split(',')[0];
+                        if (result.indexOf('https://172.17.250.193') > -1) { //正式验证
+                            // if (result.indexOf('http://fdtest.canpoint.net') > -1) { //测试验证
+                            let url = wx.getStorageSync('requstURL') + 'user/third/auth';
+                            let token = wx.getStorageSync('token');
+                            let data = {
+                                token: token,
+                                redirect_url: result
+                            };
+                            ajax.requestLoad(url, data, 'POST').then(res => {
+                                const {
+                                    code
+                                } = res;
+                                if (code == 20000) {}
+                            })
+                        } else if (result.indexOf('https://zyzs.canpoint.net/section/qrcode') > -1) {
+                            let path = res.result.split('?')[1].split('=')[1];
+                            let section_id_split = decodeURIComponent(path).split(',')[0];
+                            that.scanHandleResult(section_id_split);
+                        } else if (section_id.length == 8) {
+                            that.scanHandleResult(section_id);
+                        } else {
+                            wx.hideTabBar({
+                                success: function () {
+                                    wx.hideLoading();
+                                    that.setData({
+                                        errorCode: true,
+                                    })
+                                }
+                            })
+                        }
+                    }
+                } else {
+                    wx.hideTabBar({
+                        success: function () {
+                            wx.hideLoading();
+                            that.setData({
+                                errorCode: true,
+                            })
+                        }
+                    })
+                }
+            },
+            fail: (res) => {
+                console.log(res)
+            }
+        })
     },
     goList(e) {
         const {
@@ -334,6 +400,14 @@ Page({
             showTitle: true
         })
     },
+    backoutSeer() {
+        this.setData({
+            psdSeer: false,
+            pwdValSeer: ''
+        })
+        wx.showTabBar({})
+    },
+    // 设置监管密码
     surepsd() {
         let {
             pwdVal
@@ -355,11 +429,10 @@ Page({
                         success: () => {
                             that.setData({
                                 showPsd: false,
-                                showModel: false
-                            })
-                            wx.showTabBar({
+                                showModel: false,
                                 pwdVal: ''
                             })
+                            wx.showTabBar({})
                         }
                     })
 
@@ -369,7 +442,7 @@ Page({
             })
         } else {
             wx.showToast({
-                title: '请设置4为数字监管密码',
+                title: '请设置4位数字监管密码',
                 icon: 'none',
                 duration: 1000
             })
@@ -388,14 +461,32 @@ Page({
         })
         wx.showTabBar({})
     },
+    closeAdvert() {
+        clearInterval(this.data.timer);
+        this.setData({
+            advert: false,
+        })
+        wx.setStorageSync('showAdvert', 'close')
+        wx.showTabBar({})
+    },
     getFocus: function () {
         this.setData({
             psdFocus: true
         });
     },
+    getFocusSeer: function () {
+        this.setData({
+            psdFocusSeer: true
+        });
+    },
     inputPwd: function (e) {
         this.setData({
             pwdVal: e.detail.value
+        });
+    },
+    inputPwdSeer: function (e) {
+        this.setData({
+            pwdValSeer: e.detail.value
         });
     },
     gologin() {
@@ -407,7 +498,24 @@ Page({
         const {
             index
         } = e.currentTarget.dataset;
+        const version = wx.getStorageSync('version');
         if (index == 1) {
+            wx.navigateTo({
+                url: `/pages/mine/studentHelp?form=scan1`,
+            })
+        } else if (index == 2) {
+            wx.navigateToMiniProgram({
+                appId: 'wxcb6f001afb79e3c5',
+                path: 'pages/optimal_class/optimal_class',
+                extraData: {
+                    promoter_id: "2ea8be60-614e-11eb-be8e-abadea43f6a0"
+                },
+                envVersion: `${version==0?'trial':'release'}`,
+                success(res) {
+                    // 打开成功
+                }
+            })
+        } else if (index == 3) {
             wx.navigateToMiniProgram({
                 appId: 'wxa434b2c20ea3ddeb',
                 path: '',
@@ -416,9 +524,27 @@ Page({
                 }
             })
         }
-        if (index == 2) {
+    },
+    goOpenList(e) {
+        const version = wx.getStorageSync('version');
+        const {
+            index
+        } = e.currentTarget.dataset;
+        if (index == 1) {
             wx.navigateTo({
-                url: `/pages/mine/studentHelp?form=scan`,
+                url: `/pages/mine/studentHelp?form=openLis1`,
+            })
+        } else if (index == 2) {
+            wx.navigateToMiniProgram({
+                appId: 'wxcb6f001afb79e3c5',
+                path: 'pages/index/index',
+                extraData: {
+                    promoter_id: "1b9786e0-614e-11eb-b618-6b7752b7a4a9"
+                },
+                envVersion: `${version==0?'trial':'release'}`,
+                success(res) {
+                    // 打开成功
+                }
             })
         }
     },
@@ -434,9 +560,32 @@ Page({
         return results == null ? null : results[1];
     },
     onLoad: function (options) {
-        // this.notice()
-        // console.log(query)
-        // console.log(typeof query.scene)
+        console.log(options);
+        let showAdvert = wx.getStorageSync('showAdvert');
+        //不管是否登录，第一次进入项目的时候，打开广告提示
+        if (showAdvert == 'open') {
+            this.setData({
+                advert: true,
+            })
+            // 书写倒计时6秒关闭广告的逻辑
+            var num = 6;
+            wx.hideTabBar({});
+            this.data.timer = setInterval(() => {
+                num--;
+                if (num <= 0) {
+                    clearInterval(this.data.timer);
+                    this.setData({
+                        advert: false,
+                    })
+                    wx.showTabBar({});
+                    wx.setStorageSync('showAdvert', 'close')
+                } else {
+                    this.setData({
+                        timeOutText: num
+                    })
+                }
+            }, 1000)
+        }
         let id = '';
         let section_id_op = '';
         if (options.q) {
@@ -445,13 +594,13 @@ Page({
             section_id_op = id.split(',')[0];
         }
         let token = wx.getStorageSync('token');
-        let monitor_moudle = wx.getStorageSync('monitor_moudle');
-        let monitor_moudlePass = wx.getStorageSync('monitor_moudlePass');
         let startTime = wx.getStorageSync('startTime');
         //上次登录的时间与这次登录的时间相减，得到两次登录之间隔了多少毫秒
         let nowTimeDot = new Date().getTime() - startTime;
         //24小时过期时间的毫秒戳
         let lateTime = 1000 * 60 * 60 * 24 * 7;
+        let first_login = wx.getStorageSync('first_login');
+
         // console.log(token)
         if (token && token != '') {
             this.setData({
@@ -463,26 +612,19 @@ Page({
                     url: '/pages/login/login',
                 })
             } else {
-                //开通了家长监管模式，且曾经没有输入家长监管模式密码的
-                if (monitor_moudle == 1 && monitor_moudlePass == 0) {
-                    wx.reLaunch({
-                        url: '/pages/login/login',
+                //第一次进入项目,进入页面提示家长开启监管模式
+                if (first_login == 1) {
+                    this.setData({
+                        showModel: true,
                     })
-                } else {
-                    //没有考虑token过期等的情况
-                    this.loginSuccessShow();
-                    //各种情况下都可以登录，且url上面自带了section_id,则需要根据情况进行处理 scanHandleResult(section_id);
-                    if (id != "") {
-                        this.scanHandleResult(section_id_op);
-                    }
-                    //第一次进入项目,进入页面提示家长开启监管模式
-                    let first_login = wx.getStorageSync('first_login')
-                    if (first_login == 1) {
-                        this.setData({
-                            showModel: true,
-                        })
-                        wx.hideTabBar({})
-                    }
+                    wx.hideTabBar({})
+                }
+                //没有考虑token过期等的情况
+                this.loginSuccessShow();
+                //各种情况下都可以登录，且url上面自带了section_id,则需要根据情况进行处理 scanHandleResult(section_id);
+                console.log(id)
+                if (id != "") {
+                    this.scanHandleResult(section_id_op,'third');
                 }
             }
         } else {
@@ -492,53 +634,16 @@ Page({
             })
         }
     },
-    // getnotice() {
-    //   let showTips = wx.getStorageSync('showTips');
-    //   let url = wx.getStorageSync('requstURL') + 'common/latest/notice';
-    //   ajax.requestLoad(url, {}, 'GET').then(res => {
-    //     if (res.code === 20000) {
-    //       if (showTips == 0&&res.data.status==1) {
-    //         wx.showModal({
-    //           title: '公告',
-    //           content: res.data.text,
-    //           showCancel: false,
-    //           success(res) {
-    //             if (res.confirm) {
-    //               wx.setStorageSync('showTips', 1)
-    //             }
-    //           }
-    //         }) 
-    //       }
-    //     }
-    //   })
-    // },
+
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady: function () {
-
-    },
-    notice() {
-        let showTips = wx.getStorageSync('showTips');
-        if (showTips == 0) {
-            wx.showModal({
-                title: '公告',
-                content: '小助手将于2020年11月26日11:00至15:00进行系统升级(具体恢复时间以实际时间为准)，在此期间系统功能将无法使用，如此给您带来的不便，敬请谅解！',
-                showCancel: false,
-                success(res) {
-                    if (res.confirm) {
-                        wx.setStorageSync('showTips', 1)
-                    }
-                }
-            })
-        }
-    },
+    onReady: function () {},
     /**
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
         let token = wx.getStorageSync('token');
-        console.log(token == '')
         if (token == '') {
             this.setData({
                 loginFlag: false,
@@ -568,7 +673,7 @@ Page({
      * 生命周期函数--监听页面隐藏
      */
     onHide: function () {
-
+        clearInterval(this.data.timer);
     },
 
     /**
@@ -582,7 +687,12 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
-        this.loginSuccessShow();
+        const {
+            showScan
+        } = this.data;
+        if (!showScan) {
+            this.loginSuccessShow();
+        }
     },
 
     /**

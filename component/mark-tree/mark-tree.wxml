@@ -2,7 +2,7 @@
 <block wx:for="{{page}}" wx:for-item="ii" wx:key="iit">
   <view wx:if="{{ii.content}}">
     <view class="ques-num">{{ii.name}}</view>
-    <markTree page="{{ii.content}}" bind:tapPage='receivePage'></markTree>
+    <markTree page="{{ii.content}}" sectionid="{{sectionid}}" bind:tapPage='receivePage'></markTree>
   </view>
   <view wx:if="{{!ii.content}}">
     <view class="easy" hover-class="none" hover-stop-propagation="false">
@@ -25,6 +25,10 @@
               </block>
             </view>
           </view>
+          <view class="showVideo" wx:if="{{ii.live_vedio_url&&ii.live_vedio_url!=''}}">
+            <image bindtap="seeVideo" data-vqid="{{ii.qid}}" data-vimg="{{ii.live_vedio_image}}" data-vsrc="{{ii.live_vedio_url}}" class="icon" src="../../images/play1.png" lazy-load="false"></image>
+            此为易错题，配名师精讲，搞懂思路，举一反三。
+          </view>
         </view>
         <!-- 客观题 判断题 -->
         <view wx:if="{{ii.quesType===6}}">
@@ -42,6 +46,10 @@
                 </view>
               </block>
             </view>
+          </view>
+          <view class="showVideo" wx:if="{{ii.live_vedio_url&&ii.live_vedio_url!=''}}">
+            <image bindtap="seeVideo" data-vqid="{{ii.qid}}" data-vimg="{{ii.live_vedio_image}}" data-vsrc="{{ii.live_vedio_url}}" class="icon" src="../../images/play1.png" lazy-load="false"></image>
+            此为易错题，配名师精讲，搞懂思路，举一反三。
           </view>
         </view>
         <!-- 客观题 多选题 -->
@@ -61,6 +69,10 @@
               </block>
             </view>
           </view>
+          <view class="showVideo" wx:if="{{ii.live_vedio_url&&ii.live_vedio_url!=''}}">
+            <image bindtap="seeVideo" data-vqid="{{ii.qid}}" data-vimg="{{ii.live_vedio_image}}" data-vsrc="{{ii.live_vedio_url}}" class="icon" src="../../images/play1.png" lazy-load="false"></image>
+            此为易错题，配名师精讲，搞懂思路，举一反三。
+          </view>
         </view>
         <!-- 主观题 -->
         <view wx:if="{{ii.quesType===300}}">
@@ -75,13 +87,17 @@
           <view class="taps">
             <text class="left">标记我的答案：</text>
             <view class="answer clearfix">
-              <view class="ques unormal {{ii.checked===1?'checked':''}}"  data-qid="{{ii.qid}}" bindtap="onechecked" data-datarow='{{ii}}' data-it="{{1}}" data-indexarr="{{ii.index}}">
+              <view class="ques unormal {{ii.checked===1?'checked':''}}" data-qid="{{ii.qid}}" bindtap="onechecked" data-datarow='{{ii}}' data-it="{{1}}" data-indexarr="{{ii.index}}">
                 我答对了
               </view>
-              <view class="ques unormal {{ii.checked===0?'checkedRed':''}}"  data-qid="{{ii.qid}}" bindtap="onechecked" data-datarow='{{ii}}' data-it="{{0}}" data-indexarr="{{ii.index}}">
+              <view class="ques unormal {{ii.checked===0?'checkedRed':''}}" data-qid="{{ii.qid}}" bindtap="onechecked" data-datarow='{{ii}}' data-it="{{0}}" data-indexarr="{{ii.index}}">
                 标为错题
               </view>
             </view>
+          </view>
+          <view class="showVideo" wx:if="{{ii.live_vedio_url&&ii.live_vedio_url!=''}}">
+            <image bindtap="seeVideo" data-vqid="{{ii.qid}}" data-vimg="{{ii.live_vedio_image}}" data-vsrc="{{ii.live_vedio_url}}" class="icon" src="../../images/play1.png" lazy-load="false"></image>
+            此为易错题，配名师精讲，搞懂思路，举一反三。
           </view>
         </view>
       </view>
@@ -165,6 +181,10 @@
             </view>
           </view>
         </block>
+        <view class="showVideo" wx:if="{{ii.live_vedio_url&&itch.live_vedio_url!=''}}">
+          <image bindtap="seeVideo" data-vqid="{{ii.qid}}" data-vimg="{{ii.live_vedio_image}}" data-vsrc="{{ii.live_vedio_url}}" class="icon" src="../../images/play1.png" lazy-load="false"></image>
+          此为易错题，配名师精讲，搞懂思路，举一反三。
+        </view>
       </view>
     </view>
   </view>

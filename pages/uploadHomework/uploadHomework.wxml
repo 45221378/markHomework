@@ -21,7 +21,6 @@
           <icon type='cancel' class="delete-btn" size="20" color="#333" data-index="{{index}}" catchtap="deleteImg">
           </icon>
         </view>
-
         <view bindtap="addImg" class="add-padd">
           <view class="add-btn" wx:if="{{imgs.length>10?false:true}}">+</view>
         </view>
@@ -48,6 +47,24 @@
     <view class="bottom-btn clearfix">
       <!-- <view class="btn-left left" bindtap="close">关闭</view> -->
       <view class="btn-right right" style="width:100%" bindtap="sureMark">去标错</view>
+    </view>
+  </view>
+</view>
+
+<!-- 每次扫一扫的时候，都需要输入监管密码 --> 
+<view class="hint" wx:if="{{psdSeer}}">
+  <view class="hint-name padt40">
+    <view class="tips">请输入4位数监管密码</view>
+    <view class="hint-form">
+      <view class="input_row" catchtap="getFocusSeer">
+        <view class="pwd_item" wx:for="{{4}}" wx:key="item" wx:for-index="i">
+          <text wx:if="{{pwdValSeer.length>i}}">{{pwdValSeer[i]}}</text>
+        </view>
+      </view>
+      <input class="input_control" value="{{pwdValSeer}}" password focus="{{psdFocusSeer}}" bindinput="inputPwdSeer" maxlength="4" />
+    </view>
+    <view class="bottom-btn clearfix">
+      <view class="yes" bindtap="surepsdSeer">确定</view>
     </view>
   </view>
 </view>

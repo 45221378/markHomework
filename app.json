@@ -8,6 +8,7 @@
         "pages/mybook/mybook",
         "pages/mine/mine",
         "pages/markWrongList/markWrongList",
+        "pages/markWrongList/playVideo",
         "pages/errorList/errorList",
         "pages/wrongQuesTable/bookWrongQues",
         "pages/wrongQuesTable/wrongQuesTable",
@@ -26,7 +27,6 @@
         "pages/cropper/remark",
         "pages/uploadHomework/uploadHomework",
         "pages/restImg/checkRestImg",
-        "pages/resetPsd/resetPsd",
         "pages/findPsd/findPsd",
         "pages/agreement/agreement",
         "pages/pointTrain/pointTrain"
@@ -38,6 +38,7 @@
         "navigationBarTextStyle": "black"
     },
     "usingComponents": {
+        "advance": "component/advance/advance",
         "parser": "component/parser/parser",
         "parser-group": "component/parser-group/parser-group",
         "image-cropper": "component/image-cropper/image-cropper"

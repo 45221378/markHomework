@@ -12,7 +12,8 @@ Page({
         btnTips: '提交',
         roman: ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ', 'Ⅷ', 'Ⅸ', 'Ⅹ'],
         sendPageArray: [],
-        sendQid: ""
+        sendQid: "",
+        is_video: 0,
     },
     receivePage(e) {
         // console.log(e.detail.page);
@@ -62,7 +63,7 @@ Page({
         loop(data)
         var sendIntData = [];
         result.forEach((item, indexs) => {
-            console.log(item)
+            // console.log(item)
             if (item.children.length > 0) {
                 sendIntData.push({
                     children: [],
@@ -149,6 +150,18 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
+    //循环递归后端返回的数据，拿到整体题目结构内容
+    deepGetQues(paperStruct) {
+        let changepaperStruct = paperStruct;
+        changepaperStruct.forEach((item, index) => {
+            if (item.content) {
+                this.deepGetQues(item.content)
+            } else {
+                changepaperStruct[index] = this.handlType(item)
+            }
+        })
+        return changepaperStruct
+    },
     // 处理后端返回数据的公共方法
     handlType(items) {
         let item = items.question_data;
@@ -283,7 +296,9 @@ Page({
             score: item.score,
             template: item.template,
             questionType: item.questionType,
-            template_name: item.template_name
+            template_name: item.template_name,
+            live_vedio_image: item.live_vedio_image,
+            live_vedio_url: item.live_vedio_url
         }
         return pageData
     },
@@ -301,47 +316,25 @@ Page({
         };
         ajax.requestLoad(url, data, 'GET').then(res => {
             if (res.code === 20000) {
-                let page = []
-                let paperStruct = res.paper.paperStruct;
-                paperStruct.forEach((paper, paperi) => {
-                    page.push({
-                        name: paper.name,
-                        content: []
-                    })
-                    paper.content.forEach((con, coni) => {
-                        page[paperi].content.push({
-                            name: con.name,
-                            content: []
-                        })
-                        con.content.forEach((items, index) => {
-                            if (items.content) {
-                                page[paperi].content[coni].content.push({
-                                    name: items.name,
-                                    content: []
-                                })
-                                items.content.forEach((ii, iit) => {
-                                    page[paperi].content[coni].content[index].content[iit] = this.handlType(ii);
-                                    //   console.log(ii)
-                                })
-                            } else {
-                                page[paperi].content[coni].content[index] = this.handlType(items);
-                            }
-                        })
-                    })
-                })
-
-                console.log(page)
+                let paperStruct = this.deepGetQues(res.paper.paperStruct);
+                console.log(paperStruct)
 
                 this.setData({
                     section_name: res.section_name,
-                    page: page,
+                    page: paperStruct,
                     section_id: section_id,
-                    question_count: res.question_count
+                    question_count: res.question_count,
+                    is_video: res.is_video
                 })
             }
         })
     },
-
+    seeVideo() {
+        const { section_id } = this.data;
+        wx.navigateTo({
+            url: `/pages/markWrongList/playVideo?type=2&section_id=${section_id}`,
+        })
+    },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */

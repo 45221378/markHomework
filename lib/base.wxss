@@ -1,224 +1,239 @@
 .button {
-  margin: 0;
-  padding: 0;
-  background-color: rgba(0, 0, 0, 0);
-  line-height: inherit;
-  border-radius: 0;
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: normal;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0);
+    line-height: inherit;
+    border-radius: 0;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: normal;
 }
 
 .button::after {
-  border: none;
+    border: none;
 }
 
 .button-hover {
-  background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
 }
 
 view,
 text,
 input,
 button {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .clearfix:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: " ";
-  clear: both;
-  height: 0
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0
 }
 
 .show {
-  display: block !important;
+    display: block !important;
 }
 
 .none {
-  display: none !important;
+    display: none !important;
 }
 
 html,
 body {
-  -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
 }
 
 .left {
-  float: left;
+    float: left;
 }
 
 .right {
-  float: right;
+    float: right;
 }
 
 .fillImg {
-  margin-top: 10rpx;
+    margin-top: 10rpx;
 }
 
+
 /* 弹框的样式 */
+
 .scrollFixed {
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
 }
 
 .hint {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 9999;
-  overflow: hidden;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    overflow: hidden;
 }
 
 .hint .hint-name {
-  position: absolute;
-  left: 50%;
-  top: 40%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  width: 590rpx;
-  height: 314rpx;
-  border-radius: 6rpx;
-  padding: 70rpx 0 0 0;
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 590rpx;
+    height: 314rpx;
+    border-radius: 6rpx;
+    padding: 70rpx 0 0 0;
+}
+
+.hint .hint-box {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 512rpx;
+    height: 720rpx;
+    border-radius: 20rpx;
 }
 
 .hint .hint-error {
-  height: auto !important;
-  padding: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
 }
 
 .hint .hint-error .hint-errorCode {
-  padding: 40rpx 0 120rpx 0 !important;
-  /* height: 504rpx !important; */
-  height: auto !important;
+    padding: 40rpx 0 120rpx 0 !important;
+    /* height: 504rpx !important; */
+    height: auto !important;
 }
 
 .hint .hint-name .tips {
-  font-size: 28rpx;
-  color: #666;
-  text-align: center;
-  line-height: 50rpx;
-  padding: 0 30rpx;
+    font-size: 28rpx;
+    color: #666;
+    text-align: center;
+    line-height: 50rpx;
+    padding: 0 30rpx;
 }
 
 .hint .hint-name .tips-title {
-  text-align: center;
+    text-align: center;
 }
 
 .hint .hint-name .tips-left {
-  text-align: left !important;
+    text-align: left !important;
 }
 
 .hint .hint-name .bottom-btn {
-  height: 100rpx;
-  width: 590rpx;
-  border-top: 2rpx solid #eee;
-  position: absolute;
-  left: 0;
-  bottom: 0;
+    height: 100rpx;
+    width: 590rpx;
+    border-top: 2rpx solid #eee;
+    position: absolute;
+    left: 0;
+    bottom: 0;
 }
 
 .hint .hint-name .bottom-btn .btn-left {
-  font-size: 28rpx;
-  color: #666;
-  text-align: center;
-  border-right: 2rpx solid #eee;
-  line-height: 98rpx;
-  width: 50%;
+    font-size: 28rpx;
+    color: #666;
+    text-align: center;
+    border-right: 2rpx solid #eee;
+    line-height: 98rpx;
+    width: 50%;
 }
 
 .hint .hint-name .bottom-btn .btn-right {
-  font-size: 28rpx;
-  color: #2896fe;
-  text-align: center;
-  line-height: 98rpx;
-  width: 50%;
+    font-size: 28rpx;
+    color: #2896fe;
+    text-align: center;
+    line-height: 98rpx;
+    width: 50%;
 }
 
 .hint .hint-name .yes {
-  font-size: 28rpx;
-  color: #2896fe;
-  text-align: center;
-  line-height: 98rpx;
-  width: 100%;
+    font-size: 28rpx;
+    color: #2896fe;
+    text-align: center;
+    line-height: 98rpx;
+    width: 100%;
 }
 
+
 /* 弹框里面的样式 */
+
 .hint .padt40 {
-  padding-top: 40rpx !important;
+    padding-top: 40rpx !important;
 }
 
 .hint .hint-form .input_row {
-  margin: 10rpx auto 0;
-  width: 400rpx;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    margin: 10rpx auto 0;
+    width: 400rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .hint .hint-form .input_row .pwd_item {
-  width: 74rpx;
-  height: 74rpx;
-  border-bottom: 2rpx solid #999;
-  text-align: center;
-  padding-top: 30rpx;
+    width: 74rpx;
+    height: 74rpx;
+    border-bottom: 2rpx solid #999;
+    text-align: center;
+    padding-top: 30rpx;
 }
 
 .hint .hint-form .input_control {
-  position: absolute;
-  left: -500rpx;
+    position: absolute;
+    left: -500rpx;
 }
 
 .hint .know-bear {
-  width: 150rpx;
-  height: 190rpx;
-  position: absolute;
-  top: -110rpx;
-  left: 50%;
-  transform: translate(-50%, 0);
+    width: 150rpx;
+    height: 190rpx;
+    position: absolute;
+    top: -110rpx;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 .hint .cha {
-  position: absolute;
-  top: -70rpx;
-  right: 0;
-  color: #fff;
-  border-radius: 50%;
-  border: 1rpx solid #fff;
-  width: 40rpx;
-  height: 40rpx;
-  text-align: center;
-  line-height: 36rpx;
-  font-size: 20rpx;
+    position: absolute;
+    top: -70rpx;
+    right: 0;
+    color: #fff;
+    border-radius: 50%;
+    border: 1rpx solid #fff;
+    width: 40rpx;
+    height: 40rpx;
+    text-align: center;
+    line-height: 36rpx;
+    font-size: 20rpx;
 }
 
 .hint .hint-content {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  width: 528rpx;
-  min-height: 278rpx;
-  border-radius: 6rpx;
-  padding: 70rpx 30rpx 40rpx 30rpx;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 528rpx;
+    min-height: 278rpx;
+    border-radius: 6rpx;
+    padding: 70rpx 30rpx 40rpx 30rpx;
 }
 
-.mgt40{
-  margin-bottom: 40rpx;
+.mgt40 {
+    margin-bottom: 40rpx;
 }
 
-.mgt30{
-  margin-bottom: 30rpx;
+.mgt30 {
+    margin-bottom: 30rpx;
 }

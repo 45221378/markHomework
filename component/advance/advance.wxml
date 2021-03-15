@@ -1,0 +1,8 @@
+<!--component/advance.wxml-->
+<div class="hint" wx:if="{{flag}}">
+  <div class="hint-box">
+  123456
+  <div bindtap="ikonw">我知道了</div>
+  </div>
+  
+</div>

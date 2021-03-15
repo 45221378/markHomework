@@ -1,0 +1,15 @@
+<view class="playVideo">
+  <view class="clearfix">
+    <view class="title">视频讲解（图书用户专享）</view>
+    <button class="button getClass" bindtap="getClass">领取1节学习诊断课</button>
+  </view>
+  <view class="center" wx:if="{{type=='1'}}">
+    <!-- <video bindfullscreenchange="fullScreen" bindended="closeVideo" class="seeVideo" id="myvideo" src="{{vsrc}}"></video> -->
+    <video bindtap="sendPlay" class="seeVideo" id="myvideo" src="{{vsrc}}"></video>
+  </view>
+  <view class="center" wx:if="{{type=='2'}}">
+    <block wx:for="{{videoList}}" wx:for-item="item" wx:key="index">
+      <video bindtap="sendPlay2" data-vqid="{{item.qid}}" class="seeVideo"  src="{{item.vedio_url}}"></video>
+    </block>
+  </view>
+</view>

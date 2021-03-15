@@ -273,7 +273,7 @@ Page({
             if (res.code === 20000) {
                 let paperStruct = res.paper.paperStruct;
                 this.deepHandlePaper(paperStruct)
-                console.log(paperStruct)
+                // console.log(paperStruct)
                 let precent = ((res.question_count - res.wrong_question_count) * 100 / res.question_count).toFixed(0);
                 this.setData({
                     section_name: res.section_name,

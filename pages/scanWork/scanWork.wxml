@@ -13,7 +13,7 @@
     <view class="gobtn" bindtap="gologin">去登录 ></view>
   </view>
 </view>
-<view class="myWork {{showModel?'scrollFixed':showPsd?'scrollFixed':showTitle?'scrollFixed':''}}" wx:if="{{!showScan}}">
+<view class="myWork {{showModel?'scrollFixed':showPsd?'scrollFixed':showTitle?'scrollFixed':psdSeer?'scrollFixed':''}}" wx:if="{{!showScan}}">
   <view class="title">我的作业</view>
   <!-- 旧版本 -->
   <movable-area class="area">
@@ -113,6 +113,24 @@
     </view>
   </view>
 </view>
+<!-- 每次扫一扫的时候，都需要输入监管密码 --> 
+<view class="hint" wx:if="{{psdSeer}}">
+  <view class="hint-name padt40">
+    <view class="tips">请输入4位数监管密码</view>
+    <view class="hint-form">
+      <view class="input_row" catchtap="getFocusSeer">
+        <view class="pwd_item" wx:for="{{4}}" wx:key="item" wx:for-index="i">
+          <text wx:if="{{pwdValSeer.length>i}}">{{pwdValSeer[i]}}</text>
+        </view>
+      </view>
+      <input class="input_control" value="{{pwdValSeer}}" password focus="{{psdFocusSeer}}" bindinput="inputPwdSeer" maxlength="4" />
+    </view>
+    <view class="bottom-btn clearfix">
+      <view class="btn-left left" bindtap="backoutSeer">取消</view>
+      <view class="btn-right right" bindtap="surepsdSeer">确定</view>
+    </view>
+  </view>
+</view>
 <view class="hint" wx:if="{{showTitle}}">
   <view class="hint-name">
     <view class="tips">您可以在【我的】里设置</view>
@@ -120,7 +138,7 @@
     <view class="bottom-btn clearfix">
       <view class="yes" bindtap="yes">确定</view>
     </view>
-  </view>
+  </view> 
 </view>
 <!-- 扫描了错误的二维码 -->
 <view class="hint" wx:if="{{errorCode}}">
@@ -134,14 +152,18 @@
     </view>
   </view>
 </view>
-<!-- <view class="hint" wx:if="{{errorCode}}">
-  <view class="hint-name hint-error">
-    <view class="hint-errorCode">
-      <view class="tips tips-left">抱歉，暂不支持此二维码。</view>
-      <view class="tips tips-left">本程序支持扫描的二维码有：《智能诊断练测考》二维码，《温故知新寒暑假》小程序扫码二维码，初中《全品学练考》自我综合评价二维码，小学《全品学练考》扫码解错题二维码，全品同学辅导扫码登录二维码~</view>
+<!-- 首次开屏的轮播图广告 -->
+<view class="hint" wx:if="{{advert}}">
+  <view class="hint-box">
+    <view class="close-img" bindtap="closeAdvert">
+      <text class="close-time">{{timeOutText}}</text>跳过广告
     </view>
-    <view class="bottom-btn clearfix">
-      <view class="yes" bindtap="closeError">确定</view>
-    </view>
+    <swiper class="advert-swiper" autoplay="true" interval="2000" indicator-dots="true" duration="500" circular="true" indicator-color="#fff" indicator-active-color="#a6d2fd">
+      <block wx:for="{{openList}}" wx:key="*this">
+        <swiper-item>
+          <image class="advert-img"  mode="aspectFit" src="{{item.url}}" data-index="{{item.index}}" bindtap="goOpenList"></image>
+        </swiper-item>
+      </block>
+    </swiper>
   </view>
-</view> -->
+</view>

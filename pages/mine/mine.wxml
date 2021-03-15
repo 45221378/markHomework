@@ -66,8 +66,7 @@
 		</view>
 		<view class="fuli" wx:if="{{showIcon}}">
 			<view class="x" bindtap="closeIcon">X</view>
-			<image class="img-fixed" bindtap="goIcon"
-				src="http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/oneonone-icon.png"></image>
+			<image class="img-fixed" bindtap="goIcon" src="http://znwy.oss-cn-beijing.aliyuncs.com/zyzs/images/mine-icon.gif"></image>
 		</view>
 
 		<swiper class="swiper" autoplay="true" interval="3000" indicator-dots="true" duration="500" circular="true"
@@ -147,3 +146,5 @@
 		</view>
 	</view>
 </view>
+
+<!-- <advance></advance> -->

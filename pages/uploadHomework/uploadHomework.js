@@ -11,7 +11,61 @@ Page({
     successHint: false,
     disableBtn: true,
     ossInfo: '',
-    worksImgs: []
+    worksImgs: [],
+    psdSeer: false,
+    psdFocusSeer: true,
+    pwdValSeer: '',
+  },
+  backoutSeer() {
+    this.setData({
+      psdSeer: false,
+      pwdValSeer: ''
+    })
+    wx.showTabBar({})
+  },
+  getFocusSeer: function () {
+    this.setData({
+      psdFocusSeer: true
+    });
+  },
+  inputPwdSeer: function (e) {
+    this.setData({
+      pwdValSeer: e.detail.value
+    });
+  },
+   // 输入监管密码成功后，才能正式进入
+   surepsdSeer() {
+    let {
+      pwdValSeer
+    } = this.data;
+    if (pwdValSeer.length === 4) {
+      let url = wx.getStorageSync('requstURL') + 'user/monitor/password/check';
+      let token = wx.getStorageSync('token');
+      let data = {
+        token: token,
+        monitor_password: pwdValSeer
+      }
+      ajax.requestLoad(url, data, 'POST').then(res => {
+        if (res.code === 20000) {
+          this.setData({
+            psdSeer: false,
+            pwdValSeer: ''
+          })
+        } else {
+          wx.showToast({
+            title: '监管密码输入错误，请重新输入',
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      })
+    } else {
+      wx.showToast({
+        title: '请输入4位数字监管密码',
+        icon: 'none',
+        duration: 1000
+      })
+    }
   },
   addImg(e) {
     var that = this;
@@ -173,12 +227,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    const { section_id, section_name } = options;
-    this.setData({
-      section_name: section_name,
-      section_id: section_id
-    })
+  getPageData(){
     //发送请求调取上传图片所需要的数据
     let url = wx.getStorageSync('requstURL') + 'common/ali/signature';
     let token = wx.getStorageSync('token');
@@ -189,6 +238,22 @@ Page({
         })
       }
     })
+  },
+  onLoad: function (options) {
+    const { section_id, section_name,thirdFrom } = options;
+    this.setData({
+      section_name: section_name,
+      section_id: section_id,
+      from: thirdFrom
+    })
+    //如果用户打开了监管密码，则需要输入监管密码才能查看答案
+    let monitor_moudle = wx.getStorageSync('monitor_moudle');
+    if(monitor_moudle==1&&thirdFrom=='third'){
+      this.setData({
+        psdSeer: true,
+      })
+    }
+    this.getPageData();
   },
 
   /**
